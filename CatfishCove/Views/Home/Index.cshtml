@@ -1,0 +1,40 @@
+﻿@{  
+    ViewBag.Title = "Catfish Cove Seafood, Belmont, NC";
+    ViewBag.Description = "Catfish Cove is a seafood restaurant (fish camp) in Belmont, NC.  We are known for great fried fish and chicken and our country cookin' Sunday lunch buffet";
+}
+<div class="alert alert-error">
+    <h3>Now offering Half Order Two-Way combinations!!</h3>
+</div>
+<div class="hero-unit">
+    <h1>Welcome to Catfish Cove</h1>
+    <p>By visiting Catfish Cove Online you can now browse our menu, see what's coming up on the Sunday buffet, and MORE!</p>
+    <ul class="media-grid">
+        <li>
+            <a><img class="thumbnail" src="@Url.Content("~/Content/Images/CatfishCoveFront.png")" alt="Catfish Cove Front"></a>
+        </li>
+        <li>
+            <a><img class="thumbnail" src="@Url.Content("~/Content/Images/SaladBar.png")" alt="Catfish Cove Salad Bar"></a>
+        </li>
+    </ul>   
+</div>        
+<p>Catfish Cove is a seafood restaurant (fish camp) in Belmont, NC.  We are known for great fried fish and chicken and our country cookin' Sunday lunch buffet.</p>        
+<div class="row"> 
+    <div class="span5"> 
+        <h2>Menu</h2> 
+        <p>Check out our great menu full of all the fried and grilled seafood anyone could ask for.</p> 
+        <p>@Html.ActionLink("More details", "Index", "Menu", null, new { @class = "btn" })</p> 
+    </div> 
+    <div class="span5"> 
+        <h2>Sunday Buffet</h2> 
+        <p>Check out our famous country cookin' lunch buffet full of all your favorite home cooked foods.</p> 
+        <p>@Html.ActionLink("More details", "Index", "Buffet", null, new { @class = "btn" })</p> 
+    </div> 
+    <div class="span6"> 
+        <h2>Catering</h2> 
+        <p>Come let us cook our great seafood or country cookin' at your event.</p> 
+        <p>@Html.ActionLink("More details", "Catering", "Home", null, new { @class = "btn" })</p> 
+    </div> 
+</div>
+
+
+<script type="text/javascript">    SetActiveMenuItem("Home");</script>

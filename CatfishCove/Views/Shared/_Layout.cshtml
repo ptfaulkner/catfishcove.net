@@ -1,0 +1,53 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>@ViewBag.Title</title>
+    <meta name="description" content="@ViewBag.Description" />
+    <link href="@Url.Content("~/Content/bootstrap.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/Content/CatfishCove.css")" rel="stylesheet" type="text/css" />
+    <script src="@Url.Content("~/Scripts/jquery-1.7.2.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/modernizr-1.7.min.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/CatfishCove.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/bootstrap-alert.js")" type="text/javascript"></script>
+    <script type="text/javascript">
+        var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', 'UA-27802271-1']);
+        _gaq.push(['_trackPageview']);
+
+        (function () {
+            var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+        })();
+    </script>
+</head>
+<body>
+    <div class="topbar">
+        <div class="fill">
+            <div class="container">
+                <nav>
+                    <h3>@Html.ActionLink("Catfish Cove Seafood", "Index", "Home")</h3>                
+                    <ul class="nav">
+                        <li id="Home">@Html.ActionLink("Home", "Index", "Home")</li>
+                        <li id="Menu">@Html.ActionLink("Menu", "Index", "Menu")</li>
+                        <li id="Buffet">@Html.ActionLink("Sunday Buffet", "Index", "Buffet")</li>
+                        <li id="Catering">@Html.ActionLink("Catering", "Catering", "Home")</li>
+                        <li id="Directions">@Html.ActionLink("Directions", "Directions", "Home")</li>
+                        <li id="Contact">@Html.ActionLink("Contact", "Contact", "Home")</li>
+                    </ul>                
+                    <ul class="nav secondary-nav">
+                        <li>@Html.Partial("_LogOnPartial")</li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        @RenderBody()
+        <footer>
+            <p>&copy; @DateTime.Now.Year.ToString() Catfish Cove | 1401 Armstrong Ford Rd, Belmont, NC, 28012 | 704-825-3332</p>
+        </footer>
+    </div>
+</body>
+</html>
