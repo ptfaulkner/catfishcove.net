@@ -8,7 +8,7 @@ namespace CatfishCove.Controllers
 {
     public class HomeController : Controller
     {
-        [OutputCache(Duration = 120)]
+        //[OutputCache(Duration = 120)]
         public ActionResult Index()
         {
             ViewBag.Message = "Welcome to ASP.NET MVC!";
