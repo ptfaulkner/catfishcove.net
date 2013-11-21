@@ -37,6 +37,11 @@ namespace CatfishCove.Controllers
             return View();
         }
 
+        public ActionResult Thanksgiving()
+        {
+            return View();
+        }
+
         private void SetupMissingWeeks()
         {
             BuffetRotatingWeek newWeek = new BuffetRotatingWeek();
