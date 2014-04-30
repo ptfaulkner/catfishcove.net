@@ -1,0 +1,100 @@
+﻿@using CatfishCove.Web.Models
+@model List<IGrouping<FoodType, MenuItem>>
+
+@{
+  ViewBag.Title = "Catfish Cove Menu";
+  ViewBag.Description = "Seafood and Chicken dinner menu, with all you can eat specials.";
+}
+<div class="ui sixteen wide column">
+  <header>
+    <div class="ui vertical segment">
+      <h1 class="ui header">
+        <i class="circular food icon"></i>
+        <div class="content">
+          Menu
+          <div class="sub header">&nbsp;&nbsp;&nbsp;seafood and chicken at it's best...</div>
+        </div>
+      </h1>
+      <p>
+        <strong>All dinners include the following trimmings:</strong>
+        slaw, hushpuppies, and choice of onion rings, french fries, or baked potato.
+        
+          All whole orders or half orders include the salad bar when dinning in and not sharing a plate.
+          When sharing a plate salad is an additional 4.99.
+        
+      </p>
+    </div>
+  </header>
+  @if (User.Identity.IsAuthenticated)
+  {
+    <p>
+      @Html.ActionLink("Create New", "Create")
+    </p>
+  }
+
+  <div class="block-message">
+    
+  </div>
+
+  @foreach (IGrouping<FoodType, MenuItem> group in Model)
+  {
+    <h2>@group.Key.Name</h2>
+    <table class="ui table segment">
+      <thead>
+        <tr>
+          @if (User.Identity.IsAuthenticated)
+          {
+            <th></th>
+          }
+          <th>
+            Name
+          </th>
+          @if (group.Key.MenuOrder > 3)
+          {
+            <th>Description</th>
+          }
+          @if (group.Key.MenuOrder <= 3)
+          {
+            <th>
+              Half Order Price
+            </th>
+          }
+          <th>
+            @if (group.Key.MenuOrder <= 3)
+            {
+              <span>Whole Order</span>
+            }<span>Price</span>
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        @foreach (MenuItem item in group.ToList())
+        {
+          <tr>
+            @if (User.Identity.IsAuthenticated)
+            {
+              <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+              </td>
+            }
+            <td>
+              @item.Name
+            </td>
+            @if (group.Key.MenuOrder > 3)
+            {
+              <td>@item.Description</td>
+            }
+            @if (group.Key.MenuOrder <= 3)
+            {
+              <td>@item.HalfOrderPrice</td>
+            }
+            <td>
+              @item.WholeOrderPrice
+            </td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  }
+</div>
