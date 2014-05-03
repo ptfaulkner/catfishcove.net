@@ -12,5 +12,20 @@ namespace CatfishCove.Web.Controllers
         {
             return View();
         }
+
+        public ActionResult Catering()
+        {
+            return View();
+        }
+
+        public ActionResult Directions()
+        {
+            return View();
+        }
+
+        public ActionResult Contact()
+        {
+            return View();
+        }
 	}
 }

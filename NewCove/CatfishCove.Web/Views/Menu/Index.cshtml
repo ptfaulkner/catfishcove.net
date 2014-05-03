@@ -1,4 +1,5 @@
-﻿@using CatfishCove.Web.Models
+﻿@using System.Globalization
+@using CatfishCove.Web.Models
 @model List<IGrouping<FoodType, MenuItem>>
 
 @{
@@ -87,11 +88,13 @@
             }
             @if (group.Key.MenuOrder <= 3)
             {
-              <td>@item.HalfOrderPrice</td>
+              <td>@item.HalfOrderPrice <span class="half-order">Half Order</span></td>
             }
             <td>
-              @item.WholeOrderPrice
-            </td>
+              @item.WholeOrderPrice @if (group.Key.MenuOrder <= 3)
+                                    {
+                                      <span class="whole-order">Whole Order</span>
+                                    }</td>
           </tr>
         }
       </tbody>

@@ -65,25 +65,25 @@
       
       <div class="ui page grid">
         @RenderBody()
-        <div class="ui inverted teal page grid segment">
-          <div class="ui three column stackable grid">
-            <div class="column">
-              <div class="ui header">&copy; @DateTime.Now.Year Catfish Cove</div>
-            </div>
-            <div class="six wide right floated aligned column">
-              <h3 class="ui header">Contact Us</h3>
-              <addr>
-                1401 Armstrong Ford Rd <br />
-                Belmont, NC, 28012 <br />
-              </addr>
-              <p>704-825-3332</p>
-            </div>
-          </div>
       </div>
-
+      <div class="ui inverted teal page grid segment">
+        <div class="ui three column stackable grid">
+          <div class="column">
+            <div class="ui header">&copy; @DateTime.Now.Year Catfish Cove</div>
+          </div>
+          <div class="six wide right floated aligned column">
+            <h3 class="ui header">Contact Us</h3>
+            <address>
+              1401 Armstrong Ford Rd <br />
+              Belmont, NC, 28012 <br />
+            </address>
+            <p>704-825-3332</p>
+          </div>
+        </div>
+      </div>
       <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.js"></script>
-        <script src="~/javascript/semantic.min.js"></script>
-        <script src="~/javascript/app.js"></script>
+      <script src="~/javascript/semantic.min.js"></script>
+      <script src="~/javascript/app.js"></script>
     </div>
 </body>
 </html>
