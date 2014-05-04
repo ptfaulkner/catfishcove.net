@@ -8,12 +8,12 @@
 <div class="ui page grid overview segment stackable">
   <div class="twelve wide column">
     <section class="ui form segment">
-      @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+      @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { role = "form" }))
       {
         @Html.AntiForgeryToken()
         <h4>Use a local account to log in.</h4>
         <div class="ui divider"></div>
-        @Html.ValidationSummary(true)
+        <div class="ui error message">@Html.ValidationSummary(true)</div>
         <div class="field">
           @Html.LabelFor(m => m.UserName)
           <div class="ui left labeled icon input">
