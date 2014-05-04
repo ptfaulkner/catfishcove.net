@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Data.Entity;
 using System.Linq;
 using System.Web;
@@ -30,10 +31,13 @@ namespace CatfishCove.Web.Models
     public class MenuItem
     {
         public int Id { get; set; }
+        [Required]
         public FoodType FoodType { get; set; }
+        [Required]
         public string Name { get; set; }
         public string Description { get; set; }
         public string HalfOrderPrice { get; set; }
+        [Required]
         public string WholeOrderPrice { get; set; }
     }
 
