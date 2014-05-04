@@ -1,0 +1,38 @@
+﻿@model CatfishCove.Web.Models.RegisterViewModel
+@{
+  ViewBag.Title = "Register";
+}
+
+<h2>@ViewBag.Title.</h2>
+<div class="ui page grid overview segment">
+  <div class="sixteen wide column">
+    @using (Html.BeginForm("Register", "Account", FormMethod.Post, new {@class = "form-horizontal", role = "form"}))
+    {
+      <div class="ui form segment">
+        @Html.AntiForgeryToken()
+        <h4>Create a new account.</h4>
+        <div class="ui divider"></div>
+        <div class="ui error message">@Html.ValidationSummary()</div>
+        <div class="field">
+          @Html.LabelFor(m => m.UserName)
+          <div class="ui left labeled icon input">
+            @Html.TextBoxFor(m => m.UserName)
+          </div>
+        </div>
+        <div class="field">
+          @Html.LabelFor(m => m.Password)
+          <div class="ui left labeled icon input">
+            @Html.PasswordFor(m => m.Password)
+          </div>
+        </div>
+        <div class="field">
+          @Html.LabelFor(m => m.ConfirmPassword)
+          <div class="ui left labeled icon input">
+            @Html.PasswordFor(m => m.ConfirmPassword)
+          </div>
+        </div>
+        <input type="submit" class="ui button teal" value="Register" />
+      </div>
+    }
+  </div>
+</div>
