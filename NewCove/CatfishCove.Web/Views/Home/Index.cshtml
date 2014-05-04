@@ -10,10 +10,10 @@
     Catfish Cove Seafood
   </h1>
   <p class="ui message teal">Catfish Cove is a seafood restaurant (fish camp) in Belmont, NC. We are known for great fried fish and chicken and our country cookin' Sunday lunch buffet.</p>
-  <div class="large inverted animated fade ui button">
+  <a href="@Url.Action("Index","Menu")" class="large inverted animated fade ui button">
     <div class="visible content">See the menu</div>
     <div class="hidden content">Click here</div>
-  </div>
+  </a>
 </div>
 }
 
@@ -27,7 +27,7 @@
           Menu
         </div>
         <p>Check out our great menu full of all the fried and grilled seafood anyone could ask for.</p>
-        <p><a class="ui teal right labeled icon button" href="#">Details <i class="right long arrow icon"></i></a></p>
+        <p><a class="ui teal right labeled icon button" href="@Url.Action("Index","Menu")">Details <i class="right long arrow icon"></i></a></p>
       </div>
       <div class="column">
         <div class="ui icon header">
@@ -35,7 +35,7 @@
           Sunday Buffet
         </div>
         <p>Join us for our famous country cookin' lunch buffet, full of all your home cooked favorites.</p>
-        <p><a class="ui teal right labeled icon button" href="#">Details <i class="right long arrow icon"></i></a></p>
+        <p><a class="ui teal right labeled icon button" href="@Url.Action("Index","Buffet")">Details <i class="right long arrow icon"></i></a></p>
       </div>
       <div class="column">
         <div class="ui icon header">
@@ -43,7 +43,7 @@
           Catering
         </div>
         <p>Come let us cook our great seafood or country cookin' at your event.</p>
-        <p><a class="ui teal right labeled icon button" href="#">Details <i class="right long arrow icon"></i></a></p>
+        <p><a class="ui teal right labeled icon button" href="@Url.Action("Catering","Home")">Details <i class="right long arrow icon"></i></a></p>
       </div>
     </div>
   </div>

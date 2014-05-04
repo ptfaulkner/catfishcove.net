@@ -12,7 +12,9 @@
   @using (Html.BeginForm())
   {
     @Html.AntiForgeryToken()
-    @Html.ValidationSummary(true)
+    <div class="ui error message">
+        @Html.ValidationSummary(true)
+      </div>
 
     <div class="field">
       @Html.LabelFor(model => model.Name)

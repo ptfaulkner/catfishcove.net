@@ -17,9 +17,13 @@ namespace CatfishCove.Web.Models
     public class BuffetItem
     {
         public int Id { get; set; }
+        [Required]
         public FoodType FoodType { get; set; }
+        [Required]
         public string Name { get; set; }
+        [Required]
         public string Description { get; set; }
+        [Required]
         public int RotationFrequency { get; set; }
 
         public override string ToString()
@@ -44,10 +48,15 @@ namespace CatfishCove.Web.Models
     public class BuffetRotatingWeek
     {
         public int Id { get; set; }
+        [Required]
         public DateTime SundayDate { get; set; }
+        [Required]
         public BuffetItemSchedule Meat { get; set; }
+        [Required]
         public BuffetItemSchedule Casserole { get; set; }
+        [Required]
         public BuffetItemSchedule Corn { get; set; }
+        [Required]
         public BuffetItemSchedule Beans { get; set; }
     }
 
