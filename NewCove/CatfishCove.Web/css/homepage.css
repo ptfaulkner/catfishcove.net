@@ -77,7 +77,9 @@ p a {
 }
 
 .masthead.segment {
-  background-image: url(../images/homebackground.png);
+  background-image: url(../images/homebackground.jpg);
+  background-position-y: center;
+  background-position-x: center;
   -webkit-background-size: cover;
   background-size: cover;
   margin: 0em;

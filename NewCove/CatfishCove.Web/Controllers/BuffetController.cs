@@ -176,10 +176,45 @@ namespace CatfishCove.Web.Controllers
         {
             BuffetRotatingWeek week = _dbContext.BuffetRotatingWeeks.First(bi => bi.Id == id);
 
-            ViewBag.MeatItems = new SelectList(_dbContext.BuffetSchedules.Include("BuffetItem").Where(bi => bi.FoodType.Name == "Buffet Meat"), "Id", "BuffetItem.Name");
-            ViewBag.CasseroleItems = new SelectList(_dbContext.BuffetSchedules.Include("BuffetItem").Where(bi => bi.FoodType.Name == "Casserole"), "Id", "BuffetItem");
-            ViewBag.CornItems = new SelectList(_dbContext.BuffetSchedules.Include("BuffetItem").Where(bi => bi.FoodType.Name == "Corn"), "Id", "BuffetItem");
-            ViewBag.BeanItems = new SelectList(_dbContext.BuffetSchedules.Include("BuffetItem").Where(bi => bi.FoodType.Name == "Beans"), "Id", "BuffetItem");
+            SelectList meatItems = new SelectList(_dbContext.BuffetSchedules.Include("BuffetItem").Where(bi => bi.FoodType.Name == "Buffet Meat"), "Id", "BuffetItem.Name");
+
+            var meat = meatItems.FirstOrDefault(m => m.Value == week.Meat.Id.ToString());
+            if (meat != null)
+            {
+                meat.Selected = true;
+            }
+
+            ViewBag.MeatItems = meatItems;
+
+            SelectList casseroleItems = new SelectList(_dbContext.BuffetSchedules.Include("BuffetItem").Where(bi => bi.FoodType.Name == "Casserole"), "Id", "BuffetItem");
+
+            var casserole = casseroleItems.FirstOrDefault(c => c.Value == week.Casserole.Id.ToString());
+            if (casserole != null)
+            {
+                casserole.Selected = true;
+            }
+
+            ViewBag.CasseroleItems = casseroleItems;
+
+            SelectList cornItems = new SelectList(_dbContext.BuffetSchedules.Include("BuffetItem").Where(bi => bi.FoodType.Name == "Corn"), "Id", "BuffetItem");
+
+            var corn = cornItems.FirstOrDefault(c => c.Value == week.Corn.Id.ToString());
+            if (corn != null)
+            {
+                corn.Selected = true;
+            }
+
+            ViewBag.CornItems = cornItems;
+
+            SelectList beanItems = new SelectList(_dbContext.BuffetSchedules.Include("BuffetItem").Where(bi => bi.FoodType.Name == "Beans"), "Id", "BuffetItem");
+
+            var beans = beanItems.FirstOrDefault(c => c.Value == week.Beans.Id.ToString());
+            if (beans != null)
+            {
+                beans.Selected = true;
+            }
+
+            ViewBag.BeanItems = beanItems;
 
             return View(week);
         }

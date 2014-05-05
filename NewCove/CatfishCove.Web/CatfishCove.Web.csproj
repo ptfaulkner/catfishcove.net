@@ -146,8 +146,7 @@
     <Content Include="fonts\basic.icons.svg" />
     <Content Include="fonts\icons.svg" />
     <Content Include="Global.asax" />
-    <Content Include="images\bg.jpg" />
-    <Content Include="images\homebackground.png" />
+    <Content Include="images\homebackground.jpg" />
     <Content Include="images\loader-large-inverted.gif" />
     <Content Include="images\loader-large.gif" />
     <Content Include="images\loader-medium-inverted.gif" />
