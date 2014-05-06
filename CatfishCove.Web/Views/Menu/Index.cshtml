@@ -1,0 +1,84 @@
+﻿@model List<IGrouping<CatfishCove.Models.FoodType, CatfishCove.Models.MenuItem>>
+
+@{
+    ViewBag.Title = "Catfish Cove Menu";
+    ViewBag.Description = "Seafood and Chicken dinner menu, with all you can eat specials.";
+}
+
+<header class="page-header">
+    <h2>Menu<small>&nbsp;&nbsp;&nbsp;seafood and chicken at it's best...</small></h2>
+</header>
+@if (User.Identity.IsAuthenticated)
+{
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+}
+
+<div class="block-message">
+    <strong>All dinners include the following trimmings:</strong>
+    slaw, hushpuppies, and choice of onion rings, french fries, or baked potato.
+    <strong>All whole orders or half orders include the salad bar when dinning in and not sharing a plate.
+    When sharing a plate salad is an additional 4.99.</strong>
+</div>
+
+@foreach (IGrouping<CatfishCove.Models.FoodType, CatfishCove.Models.MenuItem> group in Model)
+{
+    <h2>@group.Key.Name</h2>
+    <table class="table table-striped table-bordered">
+    <tr>
+        @if (User.Identity.IsAuthenticated)
+        {
+        <th></th>
+        }
+        <th>
+            Name
+        </th>
+        @if (group.Key.MenuOrder > 3)
+        {
+            <th>Description</th>
+        }
+        @if (group.Key.MenuOrder <= 3)
+        {
+        <th>
+            Half Order Price
+        </th>
+        }
+        <th>
+            @if (group.Key.MenuOrder <= 3)
+            {
+                <span>Whole Order</span>
+                }<span>Price</span>
+        </th>
+    </tr>
+    @foreach (CatfishCove.Models.MenuItem item in group.ToList())
+     {
+        <tr>
+        @if (User.Identity.IsAuthenticated)
+        {
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+            @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+        </td>
+        }
+        <td>
+            @item.Name
+        </td>
+        @if (group.Key.MenuOrder > 3)
+        {
+            <td>@item.Description</td>
+        }
+        @if (group.Key.MenuOrder <= 3)
+        {
+            <td>@item.HalfOrderPrice</td>
+        }
+        <td>
+            @item.WholeOrderPrice
+        </td>
+    </tr>
+     }
+     </table>
+}
+
+<script type="text/javascript">    SetActiveMenuItem("Menu");</script>
+

@@ -1,0 +1,59 @@
+﻿@model CatfishCove.Models.BuffetItem
+
+@{
+    ViewBag.Title = "Edit";
+}
+
+<div class="page-header">    
+    <h1>Edit Buffet Item</h1>
+</div>
+
+<script src="@Url.Content("~/Scripts/jquery.validate.min.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js")" type="text/javascript"></script>
+
+@using (Html.BeginForm()) {
+    @Html.ValidationSummary(true)
+
+    @Html.HiddenFor(model => model.Id)
+
+    <div class="clearfix">
+        @Html.LabelFor(model => model.Name)
+        <div class="input">
+            @Html.EditorFor(model => model.Name)
+            @Html.ValidationMessageFor(model => model.Name)
+        </div>
+    </div>
+
+    <div class="clearfix">
+        @Html.LabelFor(model => model.Description)
+        <div class="input">
+            @Html.EditorFor(model => model.Description)
+            @Html.ValidationMessageFor(model => model.Description)
+        </div>
+    </div>
+
+        <div class="clearfix">
+        @Html.LabelFor(model => model.FoodType)
+        <div class="input">
+            @Html.DropDownListFor(model => model.FoodType.Id, (SelectList)ViewBag.FoodTypes)
+            @Html.ValidationMessageFor(model => model.FoodType)
+        </div>
+    </div>
+
+    <div class="clearfix">
+        @Html.LabelFor(model => model.RotationFrequency)
+        <div class="input">
+            @Html.EditorFor(model => model.RotationFrequency)
+            @Html.ValidationMessageFor(model => model.RotationFrequency)
+        </div>
+    </div>
+
+    <div class="actions">
+        <input type="submit" value="Save" class="btn primary" />
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
