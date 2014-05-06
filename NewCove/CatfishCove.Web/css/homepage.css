@@ -133,6 +133,11 @@ p a {
   display: none;
 }
 
+.contact-link {
+  text-decoration: underline;
+  color: #ffffff;
+}
+
 /*******************************
           Responsive
 *******************************/
