@@ -1,38 +1,50 @@
-﻿@{  
-    ViewBag.Title = "Catfish Cove Seafood, Belmont, NC";
-    ViewBag.Description = "Catfish Cove is a seafood restaurant (fish camp) in Belmont, NC.  We are known for great fried fish and chicken and our country cookin' Sunday lunch buffet";
+﻿@{
+  ViewBag.Title = "Catfish Cove Seafood, Belmont, NC";
+  ViewBag.Description = "Catfish Cove is a seafood restaurant (fish camp) in Belmont, NC.  We are known for great fried fish and chicken and our country cookin' Sunday lunch buffet";
 }
 
-<div class="hero-unit">
-    <h2>Welcome to Catfish Cove</h2>
-    <p>By visiting Catfish Cove Online you can now browse our menu, see what's coming up on the Sunday buffet, and MORE!</p>
-    <div class="row visible-desktop">
-        <div class="span5">
-            <img class="img-rounded" src="@Url.Content("~/Content/Images/CatfishCoveFront.png")" alt="Catfish Cove Front" style="height: 240px;">
-        </div>
-        <div class="span5">
-            <img class="img-rounded" src="@Url.Content("~/Content/Images/SaladBar.png")" alt="Catfish Cove Salad Bar" style="height: 240px;">
-        </div>
-    </div>   
-</div>        
-<p>Catfish Cove is a seafood restaurant (fish camp) in Belmont, NC.  We are known for great fried fish and chicken and our country cookin' Sunday lunch buffet.</p>        
-<div class="row"> 
-    <div class="span4"> 
-        <h1>Menu</h1> 
-        <p>Check out our great menu full of all the fried and grilled seafood anyone could ask for.</p> 
-        <p>@Html.ActionLink("More details", "Index", "Menu", null, new { @class = "btn" })</p> 
-    </div> 
-    <div class="span4"> 
-        <h1>Sunday Buffet</h1> 
-        <p>Check out our famous country cookin' lunch buffet full of all your favorite home cooked foods.</p> 
-        <p>@Html.ActionLink("More details", "Index", "Buffet", null, new { @class = "btn" })</p> 
-    </div> 
-    <div class="span4"> 
-        <h1>Catering</h1> 
-        <p>Come let us cook our great seafood or country cookin' at your event.</p> 
-        <p>@Html.ActionLink("More details", "Catering", "Home", null, new { @class = "btn" })</p> 
-    </div> 
+@section AnnoucementSection
+{
+<div class="ui transition information">
+  <h1 class="ui inverted header center">
+    Catfish Cove Seafood
+  </h1>
+  <p class="ui message teal">Catfish Cove is a seafood restaurant (fish camp) in Belmont, NC. We are known for great fried fish and chicken and our country cookin' Sunday lunch buffet.</p>
+  <a href="@Url.Action("Index","Menu")" class="large inverted animated fade ui button">
+    <div class="visible content">See the menu</div>
+    <div class="hidden content">Click here</div>
+  </a>
 </div>
+}
 
-
-<script type="text/javascript">    SetActiveMenuItem("Home");</script>
+<div class="ui page grid overview segment">
+  <div class="ui two wide column"></div>
+  <div class="sixteen wide column">
+    <div class="ui three column center aligned stackable divided grid">
+      <div class="column">
+        <div class="ui icon header">
+          <i class="circular food link icon"></i>
+          Menu
+        </div>
+        <p>Check out our great menu full of all the fried and grilled seafood anyone could ask for.</p>
+        <p><a class="ui teal right labeled icon button" href="@Url.Action("Index","Menu")">Details <i class="right long arrow icon"></i></a></p>
+      </div>
+      <div class="column">
+        <div class="ui icon header">
+          <i class="circular calendar link icon"></i>
+          Sunday Buffet
+        </div>
+        <p>Join us for our famous country cookin' lunch buffet, full of all your home cooked favorites.</p>
+        <p><a class="ui teal right labeled icon button" href="@Url.Action("Index","Buffet")">Details <i class="right long arrow icon"></i></a></p>
+      </div>
+      <div class="column">
+        <div class="ui icon header">
+          <i class="circular truck link icon"></i>
+          Catering
+        </div>
+        <p>Come let us cook our great seafood or country cookin' at your event.</p>
+        <p><a class="ui teal right labeled icon button" href="@Url.Action("Catering","Home")">Details <i class="right long arrow icon"></i></a></p>
+      </div>
+    </div>
+  </div>
+</div>

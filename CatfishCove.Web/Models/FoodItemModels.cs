@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Data.Entity;
 using System.Linq;
 using System.Web;
-using System.Data.Entity;
 
-namespace CatfishCove.Models
+namespace CatfishCove.Web.Models
 {
     public class FoodType
     {
@@ -16,9 +17,13 @@ namespace CatfishCove.Models
     public class BuffetItem
     {
         public int Id { get; set; }
+        [Required]
         public FoodType FoodType { get; set; }
+        [Required]
         public string Name { get; set; }
+        [Required]
         public string Description { get; set; }
+        [Required]
         public int RotationFrequency { get; set; }
 
         public override string ToString()
@@ -30,20 +35,28 @@ namespace CatfishCove.Models
     public class MenuItem
     {
         public int Id { get; set; }
+        [Required]
         public FoodType FoodType { get; set; }
+        [Required]
         public string Name { get; set; }
         public string Description { get; set; }
         public string HalfOrderPrice { get; set; }
+        [Required]
         public string WholeOrderPrice { get; set; }
     }
 
     public class BuffetRotatingWeek
     {
         public int Id { get; set; }
+        [Required]
         public DateTime SundayDate { get; set; }
+        [Required]
         public BuffetItemSchedule Meat { get; set; }
+        [Required]
         public BuffetItemSchedule Casserole { get; set; }
+        [Required]
         public BuffetItemSchedule Corn { get; set; }
+        [Required]
         public BuffetItemSchedule Beans { get; set; }
     }
 

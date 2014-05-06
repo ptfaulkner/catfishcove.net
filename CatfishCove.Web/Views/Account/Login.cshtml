@@ -1,48 +1,50 @@
-﻿@model CatfishCove.Models.LogOnModel
+﻿@model CatfishCove.Web.Models.LoginViewModel
 
 @{
-    ViewBag.Title = "Log On";
+    ViewBag.Title = "Log in";
 }
-<section id="LogOn">
-    <div class="page-header">
-        <h1>Log On</h1>
-    </div>
-    <div class="row">
-        <div class="span12 columns">
-            <script src="@Url.Content("~/Scripts/jquery.validate.min.js")" type="text/javascript"></script>
-            <script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js")" type="text/javascript"></script>
 
-            @Html.ValidationSummary(true, "Login was unsuccessful. Please correct the errors and try again.")
-
-            @using (Html.BeginForm()) {    
-                    <fieldset>
-                        <legend>Account Information</legend>
-                        <div class="clearfix">
-                            @Html.LabelFor(m => m.UserName)
-                            <div class="input">
-                                @Html.TextBoxFor(m => m.UserName, new { @class = "xlarge"})
-                                @Html.ValidationMessageFor(m => m.UserName)
-                            </div>
-                        </div>
-                        <div class="clearfix">
-                            @Html.LabelFor(m => m.Password)
-                            <div class="input">
-                                @Html.PasswordFor(m => m.Password, new { @class = "xlarge"})
-                                @Html.ValidationMessageFor(m => m.Password)
-                            </div>
-                        </div>
-                        <div class="clearfix">                            
-                            <div class="input">
-                                @Html.CheckBoxFor(m => m.RememberMe)
-                                <span>Remember me?</span>
-                            </div>
-                        </div>
-                        <div class="actions">
-                            <input type="submit" class="btn primary" value="Log On" />
-                        </div>
-                    </fieldset>
-            }
-
+<h2>@ViewBag.Title.</h2>
+<div class="ui page grid overview segment stackable">
+  <div class="twelve wide column">
+    <section class="ui form segment">
+      @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { role = "form" }))
+      {
+        @Html.AntiForgeryToken()
+        <h4>Use a local account to log in.</h4>
+        <div class="ui divider"></div>
+        <div class="ui error message">@Html.ValidationSummary(true)</div>
+        <div class="field">
+          @Html.LabelFor(m => m.UserName)
+          <div class="ui left labeled icon input">
+            @Html.TextBoxFor(m => m.UserName)
+            @Html.ValidationMessageFor(m => m.UserName)
+          </div>
         </div>
-    </div>
-</section>
+        <div class="field">
+          @Html.LabelFor(m => m.Password)
+          <div class="ui left labeled icon input">
+            @Html.PasswordFor(m => m.Password)
+            @Html.ValidationMessageFor(m => m.Password)
+          </div>
+        </div>
+        <div class="field">
+            <div class="ui checkbox">
+              @Html.CheckBoxFor(m => m.RememberMe)
+              @Html.LabelFor(m => m.RememberMe)
+            </div>
+        </div>
+        <input type="submit" value="Log in" class="ui button teal" />
+        <p>
+          @Html.ActionLink("Register", "Register") if you don't have a local account.
+        </p>
+      }
+    </section>
+  </div>
+  <div class="four wide column">
+    <section id="socialLoginForm">
+      @Html.Partial("_ExternalLoginsListPartial", new { Action = "ExternalLogin", ReturnUrl = ViewBag.ReturnUrl })
+    </section>
+  </div>
+</div>
+

@@ -1,24 +1,26 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Web;
+using System.Web.Helpers;
 using System.Web.Mvc;
-using CatfishCove.Models;
-using System.Web.UI;
+using CatfishCove.Web.Models;
 
-namespace CatfishCove.Controllers
+namespace CatfishCove.Web.Controllers
 {
     public class BuffetController : Controller
     {
-        CatfishCoveDatabase db = new CatfishCoveDatabase();
+        private readonly CatfishCoveDatabase _dbContext;
 
-        [OutputCache(Duration=10, Location=OutputCacheLocation.Client)]
+        public BuffetController(CatfishCoveDatabase dbContext)
+        {
+            _dbContext = dbContext;
+        }
+
         public ActionResult Index()
         {
-            ViewBag.StapleCrops = db.BuffetItems.Include("FoodType").Where(bi => bi.RotationFrequency == 0);
-            
+            ViewBag.StapleCrops = _dbContext.BuffetItems.Include("FoodType").Where(bi => bi.RotationFrequency == 0);
+
             DateTime today = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day);
-            var rotatingItems = db.BuffetRotatingWeeks
+            var rotatingItems = _dbContext.BuffetRotatingWeeks
                 .Include("Meat.BuffetItem")
                 .Include("Casserole.BuffetItem")
                 .Include("Corn.BuffetItem")
@@ -32,13 +34,8 @@ namespace CatfishCove.Controllers
                 SetupMissingWeeks();
             }
             rotatingItems.Reverse();
-            ViewBag.RotatingItems = rotatingItems; 
-            
-            return View();
-        }
+            ViewBag.RotatingItems = rotatingItems;
 
-        public ActionResult Thanksgiving()
-        {
             return View();
         }
 
@@ -46,7 +43,7 @@ namespace CatfishCove.Controllers
         {
             BuffetRotatingWeek newWeek = new BuffetRotatingWeek();
             //get most recent week
-            BuffetRotatingWeek recentMostWeek = db.BuffetRotatingWeeks
+            BuffetRotatingWeek recentMostWeek = _dbContext.BuffetRotatingWeeks
                 .Include("Meat.NextItem")
                 .Include("Casserole.NextItem")
                 .Include("Corn.NextItem")
@@ -58,183 +55,229 @@ namespace CatfishCove.Controllers
             newWeek.Corn = recentMostWeek.Corn.NextItem;
             newWeek.Beans = recentMostWeek.Beans.NextItem;
 
-            db.BuffetRotatingWeeks.Add(newWeek);
-            db.SaveChanges();
+            _dbContext.BuffetRotatingWeeks.Add(newWeek);
+            _dbContext.SaveChanges();
         }
-        
+
+        public ActionResult Thanksgiving()
+        {
+            return View();
+        }
+
+        [Authorize]
         public ActionResult Create()
         {
-            ViewBag.FoodTypes = new SelectList(db.FoodTypes.ToList(), "Id", "Name");
+            ViewBag.FoodTypes = new SelectList(_dbContext.FoodTypes.ToList(), "Id", "Name");
             return View();
-        } 
+        }
 
-        [HttpPost]
+        [HttpPost, Authorize, ValidateAntiForgeryToken]
         public ActionResult Create(BuffetItem buffetItem)
         {
             if (ModelState.IsValid)
             {
-                int foodTypeId = 0;
+                int foodTypeId;
                 if (int.TryParse(Request.Form["FoodType.Id"], out foodTypeId))
                 {
-                    FoodType type = db.FoodTypes.Where(ft => ft.Id == foodTypeId).First();
+                    FoodType type = _dbContext.FoodTypes.First(ft => ft.Id == foodTypeId);
                     buffetItem.FoodType = type;
-                    db.BuffetItems.Add(buffetItem);
-                    db.SaveChanges();
+                    _dbContext.BuffetItems.Add(buffetItem);
+                    _dbContext.SaveChanges();
 
                     return RedirectToAction("Index");
                 }
             }
 
-            ViewBag.FoodTypes = new SelectList(db.FoodTypes.ToList(), "Id", "Name");
+            ViewBag.FoodTypes = new SelectList(_dbContext.FoodTypes.ToList(), "Id", "Name");
             return View(buffetItem);
         }
 
+        [Authorize]
         public ActionResult CreateRotating()
         {
-            ViewBag.MeatItems = new SelectList(db.BuffetSchedules.Include("BuffetItem").Where(bi => bi.FoodType.Name == "Buffet Meat"), "Id", "BuffetItem.Name");
-            ViewBag.CasseroleItems = new SelectList(db.BuffetSchedules.Include("BuffetItem").Where(bi => bi.FoodType.Name == "Casserole"), "Id", "BuffetItem");
-            ViewBag.CornItems = new SelectList(db.BuffetSchedules.Include("BuffetItem").Where(bi => bi.FoodType.Name == "Corn"), "Id", "BuffetItem");
-            ViewBag.BeanItems = new SelectList(db.BuffetSchedules.Include("BuffetItem").Where(bi => bi.FoodType.Name == "Beans"), "Id", "BuffetItem");
-            
+            ViewBag.MeatItems = new SelectList(_dbContext.BuffetSchedules.Include("BuffetItem").Where(bi => bi.FoodType.Name == "Buffet Meat"), "Id", "BuffetItem.Name");
+            ViewBag.CasseroleItems = new SelectList(_dbContext.BuffetSchedules.Include("BuffetItem").Where(bi => bi.FoodType.Name == "Casserole"), "Id", "BuffetItem");
+            ViewBag.CornItems = new SelectList(_dbContext.BuffetSchedules.Include("BuffetItem").Where(bi => bi.FoodType.Name == "Corn"), "Id", "BuffetItem");
+            ViewBag.BeanItems = new SelectList(_dbContext.BuffetSchedules.Include("BuffetItem").Where(bi => bi.FoodType.Name == "Beans"), "Id", "BuffetItem");
+
             return View();
         }
 
-        [HttpPost]
+        [HttpPost, Authorize, ValidateAntiForgeryToken]
         public ActionResult CreateRotating(BuffetRotatingWeek week)
         {
             if (ModelState.IsValid)
             {
-                int MeatId = 0;
-                int CornId = 0;
-                int CasseroleId = 0;
-                int BeansId = 0;
+                int meatId;
+                int cornId;
+                int casseroleId;
+                int beansId;
 
-                if (int.TryParse(Request.Form["Meat.Id"], out MeatId) &&
-                    int.TryParse(Request.Form["Corn.Id"], out CornId) &&
-                    int.TryParse(Request.Form["Casserole.Id"], out CasseroleId) &&
-                    int.TryParse(Request.Form["Beans.Id"], out BeansId))
+                if (int.TryParse(Request.Form["Meat.Id"], out meatId) &&
+                    int.TryParse(Request.Form["Corn.Id"], out cornId) &&
+                    int.TryParse(Request.Form["Casserole.Id"], out casseroleId) &&
+                    int.TryParse(Request.Form["Beans.Id"], out beansId))
                 {
-                    week.Meat = db.BuffetSchedules.Where(bi => bi.Id == MeatId).First();
-                    week.Corn = db.BuffetSchedules.Where(bi => bi.Id == CornId).First();
-                    week.Casserole = db.BuffetSchedules.Where(bi => bi.Id == CasseroleId).First();
-                    week.Beans = db.BuffetSchedules.Where(bi => bi.Id == BeansId).First();
+                    week.Meat = _dbContext.BuffetSchedules.First(bi => bi.Id == meatId);
+                    week.Corn = _dbContext.BuffetSchedules.First(bi => bi.Id == cornId);
+                    week.Casserole = _dbContext.BuffetSchedules.First(bi => bi.Id == casseroleId);
+                    week.Beans = _dbContext.BuffetSchedules.First(bi => bi.Id == beansId);
 
-                    db.BuffetRotatingWeeks.Add(week);
-                    db.SaveChanges();
+                    _dbContext.BuffetRotatingWeeks.Add(week);
+                    _dbContext.SaveChanges();
 
                     return RedirectToAction("Index");
                 }
             }
 
-            ViewBag.FoodTypes = new SelectList(db.FoodTypes.ToList(), "Id", "Name");
+            ViewBag.FoodTypes = new SelectList(_dbContext.FoodTypes.ToList(), "Id", "Name");
             return View(week);
         }
- 
+
+        [Authorize]
         public ActionResult Edit(int id)
         {
-            BuffetItem buffetItem = db.BuffetItems.Where(bi => bi.Id == id).FirstOrDefault();
+            BuffetItem buffetItem = _dbContext.BuffetItems.FirstOrDefault(bi => bi.Id == id);
 
             if (buffetItem == null)
                 return RedirectToAction("Create");
 
-            ViewBag.FoodTypes = new SelectList(db.FoodTypes.ToList(), "Id", "Name");
+            ViewBag.FoodTypes = new SelectList(_dbContext.FoodTypes.ToList(), "Id", "Name");
             return View(buffetItem);
         }
 
-        [HttpPost]
+        [HttpPost, Authorize, ValidateAntiForgeryToken]
         public ActionResult Edit(BuffetItem buffetItem)
         {
             if (ModelState.IsValid)
             {
-                BuffetItem oldItem = db.BuffetItems.Where(mi => mi.Id == buffetItem.Id).First();
+                BuffetItem oldItem = _dbContext.BuffetItems.First(mi => mi.Id == buffetItem.Id);
                 oldItem.Name = buffetItem.Name;
                 oldItem.Description = buffetItem.Description;
                 oldItem.RotationFrequency = buffetItem.RotationFrequency;
 
-                int foodTypeId = 0;
+                int foodTypeId;
                 if (int.TryParse(Request.Form["FoodType.Id"], out foodTypeId))
                 {
-                    FoodType type = db.FoodTypes.Where(ft => ft.Id == foodTypeId).First();
+                    FoodType type = _dbContext.FoodTypes.First(ft => ft.Id == foodTypeId);
                     oldItem.FoodType = type;
-                    db.SaveChanges();
+                    _dbContext.SaveChanges();
 
                     return RedirectToAction("Index");
                 }
             }
 
-            ViewBag.FoodTypes = new SelectList(db.FoodTypes.ToList(), "Id", "Name");
+            ViewBag.FoodTypes = new SelectList(_dbContext.FoodTypes.ToList(), "Id", "Name");
             return View(buffetItem);
         }
 
+        [Authorize]
         public ActionResult EditRotating(int id)
         {
-            BuffetRotatingWeek week = db.BuffetRotatingWeeks.Where(bi => bi.Id == id).First();
+            BuffetRotatingWeek week = _dbContext.BuffetRotatingWeeks.First(bi => bi.Id == id);
 
-            ViewBag.MeatItems = new SelectList(db.BuffetSchedules.Include("BuffetItem").Where(bi => bi.FoodType.Name == "Buffet Meat"), "Id", "BuffetItem.Name");
-            ViewBag.CasseroleItems = new SelectList(db.BuffetSchedules.Include("BuffetItem").Where(bi => bi.FoodType.Name == "Casserole"), "Id", "BuffetItem");
-            ViewBag.CornItems = new SelectList(db.BuffetSchedules.Include("BuffetItem").Where(bi => bi.FoodType.Name == "Corn"), "Id", "BuffetItem");
-            ViewBag.BeanItems = new SelectList(db.BuffetSchedules.Include("BuffetItem").Where(bi => bi.FoodType.Name == "Beans"), "Id", "BuffetItem");
-            
+            SelectList meatItems = new SelectList(_dbContext.BuffetSchedules.Include("BuffetItem").Where(bi => bi.FoodType.Name == "Buffet Meat"), "Id", "BuffetItem.Name");
+
+            var meat = meatItems.FirstOrDefault(m => m.Value == week.Meat.Id.ToString());
+            if (meat != null)
+            {
+                meat.Selected = true;
+            }
+
+            ViewBag.MeatItems = meatItems;
+
+            SelectList casseroleItems = new SelectList(_dbContext.BuffetSchedules.Include("BuffetItem").Where(bi => bi.FoodType.Name == "Casserole"), "Id", "BuffetItem");
+
+            var casserole = casseroleItems.FirstOrDefault(c => c.Value == week.Casserole.Id.ToString());
+            if (casserole != null)
+            {
+                casserole.Selected = true;
+            }
+
+            ViewBag.CasseroleItems = casseroleItems;
+
+            SelectList cornItems = new SelectList(_dbContext.BuffetSchedules.Include("BuffetItem").Where(bi => bi.FoodType.Name == "Corn"), "Id", "BuffetItem");
+
+            var corn = cornItems.FirstOrDefault(c => c.Value == week.Corn.Id.ToString());
+            if (corn != null)
+            {
+                corn.Selected = true;
+            }
+
+            ViewBag.CornItems = cornItems;
+
+            SelectList beanItems = new SelectList(_dbContext.BuffetSchedules.Include("BuffetItem").Where(bi => bi.FoodType.Name == "Beans"), "Id", "BuffetItem");
+
+            var beans = beanItems.FirstOrDefault(c => c.Value == week.Beans.Id.ToString());
+            if (beans != null)
+            {
+                beans.Selected = true;
+            }
+
+            ViewBag.BeanItems = beanItems;
+
             return View(week);
         }
 
-        [HttpPost]
+        [HttpPost, Authorize, ValidateAntiForgeryToken]
         public ActionResult EditRotating(BuffetRotatingWeek week)
         {
             if (ModelState.IsValid)
             {
-                BuffetRotatingWeek oldWeek = db.BuffetRotatingWeeks.Where(bi => bi.Id == week.Id).First();
+                BuffetRotatingWeek oldWeek = _dbContext.BuffetRotatingWeeks.First(bi => bi.Id == week.Id);
 
-                int MeatId = 0;
-                int CornId = 0;
-                int CasseroleId = 0;
-                int BeansId = 0;
+                int meatId;
+                int cornId;
+                int casseroleId;
+                int beansId;
 
-                if (int.TryParse(Request.Form["Meat.Id"], out MeatId) &&
-                    int.TryParse(Request.Form["Corn.Id"], out CornId) &&
-                    int.TryParse(Request.Form["Casserole.Id"], out CasseroleId) &&
-                    int.TryParse(Request.Form["Beans.Id"], out BeansId))
+                if (int.TryParse(Request.Form["Meat.Id"], out meatId) &&
+                    int.TryParse(Request.Form["Corn.Id"], out cornId) &&
+                    int.TryParse(Request.Form["Casserole.Id"], out casseroleId) &&
+                    int.TryParse(Request.Form["Beans.Id"], out beansId))
                 {
-                    oldWeek.Meat = db.BuffetSchedules.Where(bi => bi.Id == MeatId).First();
-                    oldWeek.Corn = db.BuffetSchedules.Where(bi => bi.Id == CornId).First();
-                    oldWeek.Casserole = db.BuffetSchedules.Where(bi => bi.Id == CasseroleId).First();
-                    oldWeek.Beans = db.BuffetSchedules.Where(bi => bi.Id == BeansId).First();
+                    oldWeek.Meat = _dbContext.BuffetSchedules.First(bi => bi.Id == meatId);
+                    oldWeek.Corn = _dbContext.BuffetSchedules.First(bi => bi.Id == cornId);
+                    oldWeek.Casserole = _dbContext.BuffetSchedules.First(bi => bi.Id == casseroleId);
+                    oldWeek.Beans = _dbContext.BuffetSchedules.First(bi => bi.Id == beansId);
                     oldWeek.SundayDate = week.SundayDate;
 
-                    db.SaveChanges();
+                    _dbContext.SaveChanges();
 
                     return RedirectToAction("Index");
                 }
             }
 
-            ViewBag.FoodTypes = new SelectList(db.FoodTypes.ToList(), "Id", "Name");
+            ViewBag.FoodTypes = new SelectList(_dbContext.FoodTypes.ToList(), "Id", "Name");
             return View(week);
         }
 
+        [Authorize]
         public ActionResult Delete(int id)
         {
-            BuffetItem buffetItem = db.BuffetItems.Where(bi => bi.Id == id).FirstOrDefault();
+            BuffetItem buffetItem = _dbContext.BuffetItems.FirstOrDefault(bi => bi.Id == id);
 
             if (buffetItem == null)
                 return RedirectToAction("Index");
 
-            db.BuffetItems.Remove(buffetItem);
-            db.SaveChanges();
+            _dbContext.BuffetItems.Remove(buffetItem);
+            _dbContext.SaveChanges();
 
             return RedirectToAction("Index");
         }
 
+        [Authorize]
         public ActionResult DeleteRotating(int id)
         {
-            BuffetRotatingWeek week = db.BuffetRotatingWeeks.Where(bi => bi.Id == id).FirstOrDefault();
+            BuffetRotatingWeek week = _dbContext.BuffetRotatingWeeks.FirstOrDefault(bi => bi.Id == id);
 
             if (week == null)
                 return RedirectToAction("Index");
 
-            db.BuffetRotatingWeeks.Remove(week);
-            db.SaveChanges();
+            _dbContext.BuffetRotatingWeeks.Remove(week);
+            _dbContext.SaveChanges();
 
             return RedirectToAction("Index");
         }
-    }
+	}
 }

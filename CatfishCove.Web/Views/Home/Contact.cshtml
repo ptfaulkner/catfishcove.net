@@ -1,54 +1,86 @@
 ﻿@{
-    ViewBag.Title = "Contact Us";
-    ViewBag.Description = "Catfish Cove hours of operation, phone number, email and address.";
+  ViewBag.Title = "Contact Us";
+  ViewBag.Description = "Catfish Cove hours of operation, phone number, email and address.";
 }
-<section id="Contact">
-    <header class="page-header">
-        <h2>Contact<small>&nbsp;&nbsp;&nbsp;drop us a line...</small></h2>
-    </header> 
-        <div class="span2"> 
-            <h1>Address</h1> 
-            <address>
-                1401 Armstrong Ford Road<br />
-                Belmont, NC 28012<br />
-            </address> 
-        </div> 
-        <div class="span2"> 
-            <h1>Phone Number</h1> 
-            <p>704-825-3332</p> 
-        </div> 
-        <div class="span2"> 
-            <h1>Email</h1> 
-            <p><a href="mailto:kent@catfishcove.net">kent@catfishcove.net</a></p> 
-        </div>
-        <div class="span5" style="border: 1px solid #DDDDDD; border-radius: 4px 4px 4px 4px; box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075); float: left; padding: 4px;">
-            <h1>Hours of Operation</h1>
-            <table class="table">
-                <tr>
-                    <td>Tuesday - Thursday:</td>
-                    <td>4pm - 9pm</td>
-                </tr>
-                <tr>
-                    <td>Friday:</td>
-                    <td>4pm -10pm</td>
-                </tr>
-                <tr>
-                    <td>Saturday:</td>
-                    <td>3pm - 10pm</td>
-                </tr>
-                <tr>
-                    <td>Sunday:</td>
-                    <td>11am - 3pm</td>
-                </tr>
-                <tr>
-                    <td>Monday:</td>
-                    <td>Closed</td>
-                </tr>
-            </table>
-        </div>
-    <br style="clear: both;" />
-    <br />
-    <br />
-</section>
 
-<script type="text/javascript">    SetActiveMenuItem("Contact");</script>
+<div class="ui sixteen wide column">
+  <header>
+    <h1 class="ui header">
+      <i class="circular phone icon"></i>
+      <div class="content">
+        Contact
+        <div class="sub header">&nbsp;&nbsp;&nbsp;drop us a line....</div>
+      </div>
+    </h1>
+  </header>
+  
+
+  <div class="ui page grid overview segment">
+    <div class="sixteen wide column">
+      <div class="ui three column center aligned stackable divided grid">
+        <div class="column">
+          <div class="ui icon header">
+            <i class="circular home link icon"></i>
+            Address
+          </div>
+          <address>
+            1401 Armstrong Ford Rd <br />
+            Belmont, NC, 28012 <br />
+          </address>
+        </div>
+        <div class="column">
+          <div class="ui icon header">
+            <i class="circular phone link icon"></i>
+            Phone
+          </div>
+          <p>704-825-3332</p>
+        </div>
+        <div class="column">
+          <div class="ui icon header">
+            <i class="circular mail link icon"></i>
+            Email
+          </div>
+          <p>kent@catfishcove.net</p>
+        </div>
+      </div>
+      <div class="ui one column center aligned stackable">
+        <div class="column">
+          <div class="ui icon header">
+            <i class="circular time link icon"></i>
+            Hours
+          </div>
+          <table class="ui table segment">
+            <thead>
+              <tr>
+                <th style="text-align: center;">Day of week</th>
+                <th style="text-align: center;">Hours</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Tuesday - Thursday:</td>
+                <td>4pm - 9pm</td>
+              </tr>
+              <tr>
+                <td>Friday:</td>
+                <td>4pm -10pm</td>
+              </tr>
+              <tr>
+                <td>Saturday:</td>
+                <td>3pm - 10pm</td>
+              </tr>
+              <tr>
+                <td>Sunday:</td>
+                <td>11am - 3pm</td>
+              </tr>
+              <tr>
+                <td>Monday:</td>
+                <td>Closed</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      </div>
+  </div>
+</div>

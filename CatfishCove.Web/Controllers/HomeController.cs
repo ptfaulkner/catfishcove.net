@@ -4,15 +4,12 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
-namespace CatfishCove.Controllers
+namespace CatfishCove.Web.Controllers
 {
     public class HomeController : Controller
     {
-        //[OutputCache(Duration = 120)]
         public ActionResult Index()
         {
-            ViewBag.Message = "Welcome to ASP.NET MVC!";
-
             return View();
         }
 
@@ -30,5 +27,5 @@ namespace CatfishCove.Controllers
         {
             return View();
         }
-    }
+	}
 }
