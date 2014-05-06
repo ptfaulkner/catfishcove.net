@@ -1,0 +1,57 @@
+﻿@model CatfishCove.Web.Models.BuffetItem
+
+@{
+  ViewBag.Title = "Create";
+}
+
+<div class="ui sixteen wide column">
+  <header>
+    <h1>Create Buffet Item</h1>
+  </header>
+  <div class="ui form segment">
+    @using (Html.BeginForm())
+    {
+      @Html.AntiForgeryToken()
+      <div class="ui error message">
+        @Html.ValidationSummary(true)
+      </div>
+      <div class="field">
+        @Html.LabelFor(model => model.Name)
+        <div class="input">
+          @Html.EditorFor(model => model.Name)
+          @Html.ValidationMessageFor(model => model.Name)
+        </div>
+      </div>
+
+      <div class="field">
+        @Html.LabelFor(model => model.Description)
+        <div class="input">
+          @Html.EditorFor(model => model.Description)
+          @Html.ValidationMessageFor(model => model.Description)
+        </div>
+      </div>
+
+      <div class="field">
+        @Html.LabelFor(model => model.FoodType)
+        <div class="input">
+          @Html.DropDownListFor(model => model.FoodType.Id, (SelectList)ViewBag.FoodTypes)
+          @Html.ValidationMessageFor(model => model.FoodType)
+        </div>
+      </div>
+
+      <div class="field">
+        @Html.LabelFor(model => model.RotationFrequency)
+        <div class="input">
+          @Html.EditorFor(model => model.RotationFrequency)
+          @Html.ValidationMessageFor(model => model.RotationFrequency)
+        </div>
+      </div>
+
+      <input type="submit" value="Create" class="ui button teal" />
+    }
+  </div>
+  <div>
+    <br />
+    @Html.ActionLink("Back to List", "Index")
+  </div>
+</div>
