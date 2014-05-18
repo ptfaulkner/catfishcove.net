@@ -32,10 +32,7 @@ namespace CatfishCove.Web
             lessBundle.Transforms.Add(new CssMinify());
 
             bundles.Add(lessBundle);
-
-
-                BundleTable.EnableOptimizations = true;
-            
+            BundleTable.EnableOptimizations = true;
         }
     }
 }
