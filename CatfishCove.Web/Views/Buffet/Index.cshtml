@@ -17,11 +17,21 @@
         </div>
       </h1>
       <p>
-        On Sundays from 11:00am to 3:00pm we have a super delicious country cookin' buffet.  It's all you can eat with access to our full salad
-        bar, and dessert for $9.00.  Kids under 10 eat for $6.25, under 6 for $2.50, and carry-out plates are $4.25 a pound.
+        On Sundays from 11:00am to 3:00pm we have a super delicious country cookin' buffet. It's all you can eat with access to our full salad
+        bar, and dessert for $9.00. Kids under 10 eat for $6.25, under 6 for $2.50, and carry-out plates are $4.25 a pound.
       </p>
     </div>
   </header>
+  <div class="ui segment">
+    <h1>Open For Thanksgiving!</h1>
+    Join us on Thanksgiving for a holiday version of our country cookin' lunch buffet.  We'll be here from 11:00am to 3:00pm and prices for the buffet are:
+    <ul>
+      <li>$9.95 for adults</li>
+      <li>$6.95 for children under 10</li>
+      <li>$3.00 for children under 6</li>
+    </ul>
+    @Html.ActionLink("Click here to see the spread", "Thanksgiving", "Buffet", null)
+  </div>
   @if (User.Identity.IsAuthenticated)
   {
     <p>
