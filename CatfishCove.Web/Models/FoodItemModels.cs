@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Data.Entity;
 using System.Linq;
 using System.Web;
 
@@ -35,13 +34,14 @@ namespace CatfishCove.Web.Models
     public class MenuItem
     {
         public int Id { get; set; }
-        [Required]
+        [Required, Display(Name = "Food Type")]
         public FoodType FoodType { get; set; }
         [Required]
         public string Name { get; set; }
         public string Description { get; set; }
+        [Display(Name = "Half Order Price")]
         public string HalfOrderPrice { get; set; }
-        [Required]
+        [Required, Display(Name = "Whole Order Price")]
         public string WholeOrderPrice { get; set; }
     }
 
@@ -66,14 +66,5 @@ namespace CatfishCove.Web.Models
         public FoodType FoodType { get; set; }
         public BuffetItem BuffetItem { get; set; }
         public BuffetItemSchedule NextItem { get; set; }
-    }
-
-    public class CatfishCoveDatabase : DbContext
-    {
-        public DbSet<FoodType> FoodTypes { get; set; }
-        public DbSet<BuffetItem> BuffetItems { get; set; }
-        public DbSet<MenuItem> MenuItems { get; set; }
-        public DbSet<BuffetRotatingWeek> BuffetRotatingWeeks { get; set; }
-        public DbSet<BuffetItemSchedule> BuffetSchedules { get; set; }
     }
 }

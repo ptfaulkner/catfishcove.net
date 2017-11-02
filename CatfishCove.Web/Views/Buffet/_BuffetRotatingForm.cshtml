@@ -1,0 +1,54 @@
+﻿@model BuffetRotatingWeek  
+
+<div class="ui form segment">
+  <form method="post">
+    <div class="ui error message">
+      <div asp-validation-summary="ModelOnly" class="ui error message"></div>
+    </div>
+    <div class="field">
+      <label asp-for="SundayDate"></label>
+      <div class="ui left labeled icon input">
+        <input asp-for="SundayDate" />
+        <span asp-validation-for="SundayDate" class="ui error message"></span>
+      </div>
+    </div>
+    
+    <div class="field">
+      <label asp-for="Meat"></label>
+      <div class="ui left labeled icon input">
+        <select asp-for="Meat.Id" asp-items="ViewBag.MeatItems"></select>
+        <span asp-validation-for="Meat" class="ui error message"></span>
+      </div>
+    </div>
+    
+    <div class="field">
+      <label asp-for="Casserole"></label>
+      <div class="ui left labeled icon input">
+        <select asp-for="Casserole.Id" asp-items="ViewBag.CasseroleItems"></select>
+        <span asp-validation-for="Casserole" class="ui error message"></span>
+      </div>
+    </div>
+
+    <div class="field">
+      <label asp-for="Corn"></label>
+      <div class="ui left labeled icon input">
+        <select asp-for="Corn.Id" asp-items="ViewBag.CornItems"></select>
+        <span asp-validation-for="Corn" class="ui error message"></span>
+      </div>
+    </div>
+    
+    <div class="field">
+      <label asp-for="Beans"></label>
+      <div class="ui left labeled icon input">
+        <select asp-for="Beans.Id" asp-items="ViewBag.BeanItems"></select>
+        <span asp-validation-for="Beans" class="ui error message"></span>
+      </div>
+    </div>
+
+    <input type="submit" value="Save" class="ui button teal" />
+  </form>
+</div>
+<div>
+  <br />
+  <a asp-action="Index">Back to List</a>
+</div>
