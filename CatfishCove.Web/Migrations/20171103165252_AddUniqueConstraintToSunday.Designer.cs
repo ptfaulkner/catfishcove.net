@@ -11,9 +11,10 @@ using System;
 namespace CatfishCove.Web.Migrations
 {
     [DbContext(typeof(CatfishCoveDbContext))]
-    partial class CatfishCoveDbContextModelSnapshot : ModelSnapshot
+    [Migration("20171103165252_AddUniqueConstraintToSunday")]
+    partial class AddUniqueConstraintToSunday
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
