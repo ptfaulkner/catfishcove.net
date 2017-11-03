@@ -67,6 +67,9 @@ namespace CatfishCove.Web
 
             app.UseMvc(routes =>
             {
+                routes.MapRoute(name: "Catering", template: "catering", defaults: new { controller = "Home", action = "Catering" });
+                routes.MapRoute(name: "Directions", template: "directions", defaults: new { controller = "Home", action = "Directions" });
+                routes.MapRoute(name: "Contact", template: "contact", defaults: new { controller = "Home", action = "Contact" });
                 routes.MapRoute(
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
