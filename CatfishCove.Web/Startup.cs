@@ -27,7 +27,7 @@ namespace CatfishCove.Web
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<CatfishCoveDbContext>(options =>
-                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+                options.UseSqlite(Configuration.GetConnectionString("DefaultConnection")));
 
             services.AddIdentity<ApplicationUser, IdentityRole>()
                 .AddEntityFrameworkStores<CatfishCoveDbContext>()
@@ -42,7 +42,7 @@ namespace CatfishCove.Web
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ISeeder seeder)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
             if (env.IsDevelopment())
             {
@@ -58,7 +58,6 @@ namespace CatfishCove.Web
             using (var serviceScope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope())
             {
                 serviceScope.ServiceProvider.GetService<CatfishCoveDbContext>().Database.Migrate();
-                seeder.Seed();
             }
 
             app.UseStaticFiles();

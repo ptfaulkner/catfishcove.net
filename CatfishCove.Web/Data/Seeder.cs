@@ -77,7 +77,7 @@ namespace CatfishCove.Web.Data
                     new BuffetItem { FoodType = bread, Description = "The good stuff", Name = "Cornbread", RotationFrequency = 0 },
                     new BuffetItem { FoodType = buffetMeat, Description = "Deep Fried Pork Tenderloin", Name = "Pork Chops", RotationFrequency = 1 },
                     new BuffetItem { FoodType = casserole, Description = "", Name = "Chicken Casserole", RotationFrequency = 1 },
-                    new BuffetItem { FoodType = corn, Description = "", Name = "Corn on the Cob", RotationFrequency = 1 },
+                    new BuffetItem { FoodType = corn, Description = "", Name = "Corn On the Cob", RotationFrequency = 1 },
                     new BuffetItem { FoodType = beans, Description = "", Name = "Pinto Beans", RotationFrequency = 2 },
                     new BuffetItem { FoodType = buffetMeat, Description = "", Name = "Meat Loaf", RotationFrequency = 3 },
                     new BuffetItem { FoodType = casserole, Description = "", Name = "Brocolli Casserole", RotationFrequency = 1 },
