@@ -135,7 +135,10 @@ namespace CatfishCove.Web.Controllers
                 }
             }
 
-            ViewBag.FoodTypes = new SelectList(_dbContext.FoodTypes.ToList(), "Id", "Name");
+            ViewBag.MeatItems = new SelectList(_dbContext.BuffetSchedules.Include("BuffetItem").Where(bi => bi.FoodType.Name == "Buffet Meat"), "Id", "BuffetItem.Name");
+            ViewBag.CasseroleItems = new SelectList(_dbContext.BuffetSchedules.Include("BuffetItem").Where(bi => bi.FoodType.Name == "Casserole"), "Id", "BuffetItem");
+            ViewBag.CornItems = new SelectList(_dbContext.BuffetSchedules.Include("BuffetItem").Where(bi => bi.FoodType.Name == "Corn"), "Id", "BuffetItem");
+            ViewBag.BeanItems = new SelectList(_dbContext.BuffetSchedules.Include("BuffetItem").Where(bi => bi.FoodType.Name == "Beans"), "Id", "BuffetItem");
             return View(week);
         }
 
