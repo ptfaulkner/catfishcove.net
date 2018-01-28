@@ -259,5 +259,69 @@ namespace CatfishCove.Web.Data
                 _dbContext.SaveChanges();
             }
         }
+
+        public void AddCollardsAndClosed()
+        {
+            if (_dbContext.BuffetSchedules.Any(bs => bs.BuffetItem.Name == "Closed"))
+                return;
+
+            var buffetMeat = _dbContext.FoodTypes.First(ft => ft.Name == "Buffet Meat");
+            var casserole = _dbContext.FoodTypes.First(ft => ft.Name == "Casserole");
+            var corn = _dbContext.FoodTypes.First(ft => ft.Name == "Corn");
+            var beans = _dbContext.FoodTypes.First(ft => ft.Name == "Beans");
+
+            BuffetItemSchedule collards = new BuffetItemSchedule
+            {
+                FoodType = beans,
+                BuffetItem = _dbContext.BuffetItems.First(bi => bi.Name == "Collards")
+            };
+
+            BuffetItemSchedule closedBeans = new BuffetItemSchedule
+            {
+                FoodType = beans,
+                BuffetItem = _dbContext.BuffetItems.First(bi => bi.Name == "Closed" && bi.FoodType.Name == "Beans")
+            };
+
+            BuffetItemSchedule closedMeat = new BuffetItemSchedule
+            {
+                FoodType = buffetMeat,
+                BuffetItem = _dbContext.BuffetItems.First(bi => bi.Name == "Closed" && bi.FoodType.Name == "Buffet Meat")
+            };
+
+            BuffetItemSchedule closedCasserole = new BuffetItemSchedule
+            {
+                FoodType = casserole,
+                BuffetItem = _dbContext.BuffetItems.First(bi => bi.Name == "Closed" && bi.FoodType.Name == "Casserole")
+            };
+
+            BuffetItemSchedule closedCorn = new BuffetItemSchedule
+            {
+                FoodType = corn,
+                BuffetItem = _dbContext.BuffetItems.First(bi => bi.Name == "Closed" && bi.FoodType.Name == "Corn")
+            };
+
+            List<BuffetItemSchedule> newItems = new List<BuffetItemSchedule>
+            {
+                collards,
+                closedCorn,
+                closedBeans,
+                closedCasserole,
+                closedMeat
+            };
+
+            _dbContext.BuffetSchedules.AddRange(newItems);
+
+            BuffetItemSchedule limaBeans =
+                _dbContext.BuffetSchedules.First(bs => bs.BuffetItem.Name == "Black Eyed Peas");
+
+            collards.NextItem = limaBeans;
+            closedCorn.NextItem = _dbContext.BuffetSchedules.First(bs => bs.BuffetItem.Name == "Corn On the Cob");
+            closedBeans.NextItem = limaBeans;
+            closedCasserole.NextItem =
+                _dbContext.BuffetSchedules.First(bs => bs.BuffetItem.Name == "Chicken Casserole");
+            closedMeat.NextItem = _dbContext.BuffetSchedules.First(bs => bs.BuffetItem.Name == "Baked Ham");
+
+            _dbContext.SaveChanges();
+        }
     }
 }

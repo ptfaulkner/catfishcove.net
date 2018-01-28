@@ -4,6 +4,7 @@
     <TargetFramework>netcoreapp2.0</TargetFramework>
     <UserSecretsId>aspnet-CatfishCove.Web-F2964307-A791-4BD0-8EDF-49530AA15FC4</UserSecretsId>
     <RuntimeIdentifier>win8-x64</RuntimeIdentifier>
+    <MvcRazorCompileOnPublish>false</MvcRazorCompileOnPublish>
   </PropertyGroup>
 
 

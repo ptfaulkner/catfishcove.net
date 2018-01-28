@@ -3,5 +3,6 @@
     public interface ISeeder
     {
         void Seed();
+        void AddCollardsAndClosed();
     }
 }

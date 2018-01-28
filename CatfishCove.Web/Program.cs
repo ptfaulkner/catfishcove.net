@@ -27,6 +27,7 @@ namespace CatfishCove.Web
                     // Requires using RazorPagesMovie.Models;
                     var seeder = services.GetService(typeof(ISeeder)) as ISeeder;
                     seeder.Seed();
+                    seeder.AddCollardsAndClosed();
                 }
                 catch (Exception ex)
                 {
