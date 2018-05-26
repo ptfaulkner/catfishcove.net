@@ -66,6 +66,19 @@
             </a>
           </div>
         </div>
+        @if (DateTime.Now < new DateTime(2018, 5, 31, 8, 0, 0))
+        {
+          <div class="sixteen wide column">
+            <div class="ui icon message">
+              <i class="attention icon"></i>
+              <div class="content">
+                <div class="header">
+                  Sorry for the inconvience, but we will be closed from 5/26/2018 - 5/30/2018.
+                </div>
+              </div>
+            </div>
+          </div>
+        }
         @RenderSection("AnnoucementSection", false)
       </div>
     </div>
