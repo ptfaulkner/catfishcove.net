@@ -1,47 +1,91 @@
-﻿@model CatfishCove.Web.Models.LoginViewModel
+﻿@using System.Collections.Generic
+@using System.Linq
+@using Microsoft.AspNetCore.Http
+@using Microsoft.AspNetCore.Http.Authentication
+@model LoginViewModel
+@inject SignInManager<ApplicationUser> SignInManager
 
 @{
     ViewBag.Title = "Log in";
 }
 
-<h2>@ViewBag.Title.</h2>
 <div class="ui page grid overview segment stackable">
   <div class="twelve wide column">
+    
+    <h2>@ViewBag.Title</h2>
     <section class="ui form segment">
-      @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { role = "form" }))
-      {
-        @Html.AntiForgeryToken()
+      <form asp-route-returnurl="@ViewData["ReturnUrl"]" method="post">
         <h4>Use a local account to log in.</h4>
         <div class="ui divider"></div>
-        <div class="ui error message">@Html.ValidationSummary(true)</div>
+        <div asp-validation-summary="ModelOnly" class="ui error message"></div>
         <div class="field">
-          @Html.LabelFor(m => m.UserName)
+          <label asp-for="Email"></label>
           <div class="ui left labeled icon input">
-            @Html.TextBoxFor(m => m.UserName)
-            @Html.ValidationMessageFor(m => m.UserName)
+            <input asp-for="Email"/>
+            <span asp-validation-for="Email" class="ui error message"></span>
           </div>
         </div>
         <div class="field">
-          @Html.LabelFor(m => m.Password)
+          <label asp-for="Password"></label>
           <div class="ui left labeled icon input">
-            @Html.PasswordFor(m => m.Password)
-            @Html.ValidationMessageFor(m => m.Password)
+            <input asp-for="Password"/>
+            <span asp-validation-for="Password" class="ui error message"></span>
           </div>
         </div>
         <div class="field">
-            <div class="ui checkbox">
-              @Html.CheckBoxFor(m => m.RememberMe)
-              @Html.LabelFor(m => m.RememberMe)
-            </div>
+          <div class="ui left labeled icon checkbox">
+            <input asp-for="RememberMe"/>
+            <label asp-for="RememberMe"></label>
+            <span asp-validation-for="RememberMe" class="ui error message"></span>
+          </div>
         </div>
-        <input type="submit" value="Log in" class="ui button teal" />
-      }
+        <div class="field">
+          <button type="submit" class="ui button teal">Log in</button>
+        </div>
+        <div class="field">
+          <p>
+            <a asp-action="ForgotPassword">Forgot your password?</a>
+          </p>
+          <p>
+            <a asp-action="Register" asp-route-returnurl="@ViewData["ReturnUrl"]">Register as a new user?</a>
+          </p>
+        </div>
+      </form>
     </section>
   </div>
-  <div class="four wide column">
-    <section id="socialLoginForm">
-      @Html.Partial("_ExternalLoginsListPartial", new { Action = "ExternalLogin", ReturnUrl = ViewBag.ReturnUrl })
+  <div class="col-md-6 col-md-offset-2">
+    <section>
+      <h4>Use another service to log in.</h4>
+
+      @{
+          var loginProviders = (await SignInManager.GetExternalAuthenticationSchemesAsync()).ToList();
+          if (loginProviders.Count == 0)
+          {
+              <div>
+                <p>
+                  There are no external authentication services configured. See <a href="https://go.microsoft.com/fwlink/?LinkID=532715">this article</a>
+                  for details on setting up this ASP.NET application to support logging in via external services.
+                </p>
+              </div>
+          }
+          else
+          {
+              <form asp-action="ExternalLogin" asp-route-returnurl="@ViewData["ReturnUrl"]" method="post" class="form-horizontal">
+                <div>
+                  <p>
+                    @foreach (var provider in loginProviders)
+                    {
+                        <button type="submit" class="btn btn-default" name="provider" value="@provider.Name" title="Log in using your @provider.DisplayName account">@provider.Name</button>
+                    }
+                  </p>
+                </div>
+              </form>
+          }
+      }
     </section>
   </div>
 </div>
 
+@section Scripts {
+  @await Html.PartialAsync("_ValidationScriptsPartial")
+}

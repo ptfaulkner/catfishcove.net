@@ -1,38 +1,45 @@
-﻿@model CatfishCove.Web.Models.RegisterViewModel
+﻿@model RegisterViewModel
 @{
-  ViewBag.Title = "Register";
+    ViewBag.Title = "Register";
 }
 
-<h2>@ViewBag.Title.</h2>
-<div class="ui page grid overview segment">
-  <div class="sixteen wide column">
-    @using (Html.BeginForm("Register", "Account", FormMethod.Post, new {role = "form"}))
-    {
-      <div class="ui form segment">
-        @Html.AntiForgeryToken()
+
+<div class="ui page grid overview segment stackable">
+  <div class="twelve wide column">
+
+    <h2>@ViewBag.Title</h2>
+    <section class="ui form segment">
+      <form asp-route-returnUrl="@ViewData["ReturnUrl"]" method="post">
         <h4>Create a new account.</h4>
         <div class="ui divider"></div>
-        <div class="ui error message">@Html.ValidationSummary()</div>
+        <div asp-validation-summary="ModelOnly" class="ui error message"></div>
         <div class="field">
-          @Html.LabelFor(m => m.UserName)
+          <label asp-for="Email"></label>
           <div class="ui left labeled icon input">
-            @Html.TextBoxFor(m => m.UserName)
+            <input asp-for="Email" />
+            <span asp-validation-for="Email" class="ui error message"></span>
           </div>
         </div>
         <div class="field">
-          @Html.LabelFor(m => m.Password)
+          <label asp-for="Password"></label>
           <div class="ui left labeled icon input">
-            @Html.PasswordFor(m => m.Password)
+            <input asp-for="Password" />
+            <span asp-validation-for="Password" class="ui error message"></span>
           </div>
         </div>
         <div class="field">
-          @Html.LabelFor(m => m.ConfirmPassword)
+          <label asp-for="ConfirmPassword"></label>
           <div class="ui left labeled icon input">
-            @Html.PasswordFor(m => m.ConfirmPassword)
+            <input asp-for="ConfirmPassword" />
+            <span asp-validation-for="ConfirmPassword" class="ui error message"></span>
           </div>
         </div>
-        <input type="submit" class="ui button teal" value="Register" />
-      </div>
-    }
+        <button type="submit" class="ui button teal">Register</button>
+      </form>
+    </section>
   </div>
 </div>
+
+@section Scripts {
+  @await Html.PartialAsync("_ValidationScriptsPartial")
+}

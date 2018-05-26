@@ -1,0 +1,44 @@
+﻿@model LoginWith2faViewModel
+@{
+    ViewBag.Title = "Two-factor authentication";
+}
+
+<div class="ui page grid overview segment stackable">
+  <div class="twelve wide column">
+    <h2>@ViewBag.Title</h2>
+    <hr />
+    <p>Your login is protected with an authenticator app. Enter your authenticator code below.</p>
+    <section class="ui form segment">
+      <form method="post" asp-route-returnUrl="@ViewData["ReturnUrl"]">
+        <input asp-for="RememberMe" type="hidden" />
+        <div asp-validation-summary="ModelOnly" class="ui error message"></div>
+        <div class="field">
+          <label asp-for="TwoFactorCode"></label>
+          <div class="ui left labeled icon input">
+            <input asp-for="TwoFactorCode" autocomplete="off" />
+            <span asp-validation-for="TwoFactorCode" class="ui error message"></span>
+          </div>
+        </div>
+        <div class="field">
+          <div class="ui left labeled icon checkbox">
+            <label asp-for="RememberMachine">
+              <input asp-for="RememberMachine" />
+              @Html.DisplayNameFor(m => m.RememberMachine)
+            </label>
+          </div>
+        </div>
+        <div class="field">
+          <button type="submit" class="ui button teal">Log in</button>
+        </div>
+      </form>
+    </section>
+    <p>
+      Don't have access to your authenticator device? You can
+      <a asp-action="LoginWithRecoveryCode" asp-route-returnUrl="@ViewData["ReturnUrl"]">log in with a recovery code</a>.
+    </p>
+  </div>
+</div>
+
+@section Scripts {
+  @await Html.PartialAsync("_ValidationScriptsPartial")
+}

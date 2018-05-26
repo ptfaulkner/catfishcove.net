@@ -1,0 +1,46 @@
+﻿// Configure bundling and minification for the project.
+// More info at https://go.microsoft.com/fwlink/?LinkId=808241
+[
+    {
+        "outputFileName": "wwwroot/css/site.min.css",
+        // An array of relative input file paths. Globbing patterns supported
+        "inputFiles": [
+            "wwwroot/css/site.css"
+        ]
+    },
+    {
+        "outputFileName": "wwwroot/css/semantic-ui.css",
+        // An array of relative input file paths. Globbing patterns supported
+        "inputFiles": [
+            "wwwroot/css/less/basic.icon.less",
+            "wwwroot/css/less/button.less",
+            "wwwroot/css/less/divider.less",
+            "wwwroot/css/less/form.less",
+            "wwwroot/css/less/grid.less",
+            "wwwroot/css/less/header.less",
+            "wwwroot/css/less/icon.less",
+            "wwwroot/css/less/input.less",
+            "wwwroot/css/less/item.less",
+            "wwwroot/css/less/list.less",
+            "wwwroot/css/less/menu.less",
+            "wwwroot/css/less/message.less",
+            "wwwroot/css/less/segment.less",
+            "wwwroot/css/less/table.less",
+            "wwwroot/css/less/dropdown.less"
+
+        ]
+    },
+    {
+        "outputFileName": "wwwroot/js/site.min.js",
+        "inputFiles": [
+            "wwwroot/js/site.js"
+        ],
+        // Optionally specify minification options
+        "minify": {
+            "enabled": true,
+            "renameLocals": true
+        },
+        // Optionally generate .map file
+        "sourceMap": false
+    }
+]

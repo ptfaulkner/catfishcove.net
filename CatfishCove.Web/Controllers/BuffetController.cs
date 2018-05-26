@@ -1,21 +1,26 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
-using System.Web.Helpers;
-using System.Web.Mvc;
+using System.Threading.Tasks;
+using CatfishCove.Web.Data;
 using CatfishCove.Web.Models;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 
 namespace CatfishCove.Web.Controllers
 {
     public class BuffetController : Controller
     {
-        private readonly CatfishCoveDatabase _dbContext;
+        private readonly CatfishCoveDbContext _dbContext;
 
-        public BuffetController(CatfishCoveDatabase dbContext)
+        public BuffetController(CatfishCoveDbContext dbContext)
         {
             _dbContext = dbContext;
         }
 
-        public ActionResult Index()
+        public IActionResult Index()
         {
             ViewBag.StapleCrops = _dbContext.BuffetItems.Include("FoodType").Where(bi => bi.RotationFrequency == 0);
 
@@ -59,20 +64,20 @@ namespace CatfishCove.Web.Controllers
             _dbContext.SaveChanges();
         }
 
-        public ActionResult Thanksgiving()
+        public IActionResult Thanksgiving()
         {
             return View();
         }
 
         [Authorize]
-        public ActionResult Create()
+        public IActionResult Create()
         {
             ViewBag.FoodTypes = new SelectList(_dbContext.FoodTypes.ToList(), "Id", "Name");
             return View();
         }
 
         [HttpPost, Authorize, ValidateAntiForgeryToken]
-        public ActionResult Create(BuffetItem buffetItem)
+        public IActionResult Create(BuffetItem buffetItem)
         {
             if (ModelState.IsValid)
             {
@@ -93,7 +98,7 @@ namespace CatfishCove.Web.Controllers
         }
 
         [Authorize]
-        public ActionResult CreateRotating()
+        public IActionResult CreateRotating()
         {
             ViewBag.MeatItems = new SelectList(_dbContext.BuffetSchedules.Include("BuffetItem").Where(bi => bi.FoodType.Name == "Buffet Meat"), "Id", "BuffetItem.Name");
             ViewBag.CasseroleItems = new SelectList(_dbContext.BuffetSchedules.Include("BuffetItem").Where(bi => bi.FoodType.Name == "Casserole"), "Id", "BuffetItem");
@@ -104,7 +109,7 @@ namespace CatfishCove.Web.Controllers
         }
 
         [HttpPost, Authorize, ValidateAntiForgeryToken]
-        public ActionResult CreateRotating(BuffetRotatingWeek week)
+        public IActionResult CreateRotating(BuffetRotatingWeek week)
         {
             if (ModelState.IsValid)
             {
@@ -130,12 +135,15 @@ namespace CatfishCove.Web.Controllers
                 }
             }
 
-            ViewBag.FoodTypes = new SelectList(_dbContext.FoodTypes.ToList(), "Id", "Name");
+            ViewBag.MeatItems = new SelectList(_dbContext.BuffetSchedules.Include("BuffetItem").Where(bi => bi.FoodType.Name == "Buffet Meat"), "Id", "BuffetItem.Name");
+            ViewBag.CasseroleItems = new SelectList(_dbContext.BuffetSchedules.Include("BuffetItem").Where(bi => bi.FoodType.Name == "Casserole"), "Id", "BuffetItem");
+            ViewBag.CornItems = new SelectList(_dbContext.BuffetSchedules.Include("BuffetItem").Where(bi => bi.FoodType.Name == "Corn"), "Id", "BuffetItem");
+            ViewBag.BeanItems = new SelectList(_dbContext.BuffetSchedules.Include("BuffetItem").Where(bi => bi.FoodType.Name == "Beans"), "Id", "BuffetItem");
             return View(week);
         }
 
         [Authorize]
-        public ActionResult Edit(int id)
+        public IActionResult Edit(int id)
         {
             BuffetItem buffetItem = _dbContext.BuffetItems.FirstOrDefault(bi => bi.Id == id);
 
@@ -147,7 +155,7 @@ namespace CatfishCove.Web.Controllers
         }
 
         [HttpPost, Authorize, ValidateAntiForgeryToken]
-        public ActionResult Edit(BuffetItem buffetItem)
+        public IActionResult Edit(BuffetItem buffetItem)
         {
             if (ModelState.IsValid)
             {
@@ -172,7 +180,7 @@ namespace CatfishCove.Web.Controllers
         }
 
         [Authorize]
-        public ActionResult EditRotating(int id)
+        public IActionResult EditRotating(int id)
         {
             BuffetRotatingWeek week = _dbContext.BuffetRotatingWeeks.First(bi => bi.Id == id);
 
@@ -220,7 +228,7 @@ namespace CatfishCove.Web.Controllers
         }
 
         [HttpPost, Authorize, ValidateAntiForgeryToken]
-        public ActionResult EditRotating(BuffetRotatingWeek week)
+        public IActionResult EditRotating(BuffetRotatingWeek week)
         {
             if (ModelState.IsValid)
             {
@@ -253,7 +261,7 @@ namespace CatfishCove.Web.Controllers
         }
 
         [Authorize]
-        public ActionResult Delete(int id)
+        public IActionResult Delete(int id)
         {
             BuffetItem buffetItem = _dbContext.BuffetItems.FirstOrDefault(bi => bi.Id == id);
 
@@ -267,7 +275,7 @@ namespace CatfishCove.Web.Controllers
         }
 
         [Authorize]
-        public ActionResult DeleteRotating(int id)
+        public IActionResult DeleteRotating(int id)
         {
             BuffetRotatingWeek week = _dbContext.BuffetRotatingWeeks.FirstOrDefault(bi => bi.Id == id);
 
@@ -279,5 +287,5 @@ namespace CatfishCove.Web.Controllers
 
             return RedirectToAction("Index");
         }
-	}
+    }
 }

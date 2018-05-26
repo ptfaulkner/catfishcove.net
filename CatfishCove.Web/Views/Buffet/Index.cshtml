@@ -1,9 +1,8 @@
-﻿@using CatfishCove.Web.Models
-@model IEnumerable<BuffetItem>
+﻿@model IEnumerable<BuffetItem>
 
 @{
   ViewBag.Title = "Catfish Cove Seafood Sunday Buffet";
-  ViewBag.Description = "On Sundays from 11:00am to 3:00pm we have a super delicous country cookin' buffet.  It's all you can eat with access to our full salad bar, and dessert for $7.95.";
+  ViewBag.Description = "On Sundays from 11:00am to 3:00pm we have a super delicous country cookin' buffet.  It's all you can eat with access to our full salad bar, and dessert for $9.75.";
 }
 
 <div class="ui sixteen wide column">
@@ -18,15 +17,15 @@
       </h1>
       <p>
         On Sundays from 11:00am to 3:00pm we have a super delicious country cookin' buffet.  It's all you can eat with access to our full salad
-        bar, and dessert for $9.75.  Kids under 10 eat for $6.75, under 6 for $2.75, and carry-out plates are $4.75 a pound.
+        bar, and dessert for $10.25.  Kids 6 - 10 eat for $6.75, under 6 for $2.75, and carry-out plates are $5.25 a pound.
       </p>
     </div>
   </header>
   @if (User.Identity.IsAuthenticated)
   {
     <p>
-      @Html.ActionLink("Create New Buffet Item", "Create") |
-      @Html.ActionLink("Create New Rotating Item", "CreateRotating")
+      <a asp-action="Create">Create New Buffet Item</a> |
+      <a asp-action="CreateRotating">Create New Rotating Item</a>
     </p>
   }
   <h3>Rotating Items</h3>
@@ -51,8 +50,8 @@
           @if (User.Identity.IsAuthenticated)
           {
             <td>
-              @Html.ActionLink("Edit", "EditRotating", new { id = week.Id }) |
-              @Html.ActionLink("Delete", "DeleteRotating", new { id = week.Id })
+              <a asp-action="EditRotating" asp-route-id="@week.Id">Edit</a> |
+              <a asp-action="DeleteRotating" asp-route-id="@week.Id">Delete</a>
             </td>
           }
           <td>@week.SundayDate.ToShortDateString()</td>
@@ -64,7 +63,7 @@
       }
     </tbody>
   </table>
-  <h3>Staple Crops</h3>
+  <h3>Staples</h3>
   <table class="ui table segment">
     <thead>
       <tr>
@@ -84,8 +83,8 @@
           @if (User.Identity.IsAuthenticated)
           {
             <td>
-              @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
-              @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+              <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+              <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
             </td>
           }
           <td>@item.Name</td>

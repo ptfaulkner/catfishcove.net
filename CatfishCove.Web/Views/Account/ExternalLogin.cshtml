@@ -1,0 +1,37 @@
+﻿@model ExternalLoginViewModel
+@{
+    ViewBag.Title = "Register";
+}
+
+<div class="ui page grid overview segment stackable">
+  <div class="twelve wide column">
+    <h2>@ViewBag.Title</h2>
+    <h4>Associate your @ViewData["LoginProvider"] account.</h4>
+    <hr />
+
+    <p class="text-info">
+      You've successfully authenticated with <strong>@ViewData["LoginProvider"]</strong>.
+      Please enter an email address for this site below and click the Register button to finish
+      logging in.
+    </p>
+
+
+    <section class="ui form segment">
+      <form asp-action="ExternalLoginConfirmation" asp-route-returnurl="@ViewData["ReturnUrl"]" method="post">
+        <div asp-validation-summary="ModelOnly" class="ui error message"></div>
+        <div class="field">
+          <label asp-for="Email"></label>
+          <div class="ui left labeled icon input">
+            <input asp-for="Email" />
+            <span asp-validation-for="Email" class="ui error message"></span>
+          </div>
+        </div>
+        <button type="submit" class="ui button teal">Register</button>
+      </form>
+    </section>
+  </div>
+</div>
+
+@section Scripts {
+  @await Html.PartialAsync("_ValidationScriptsPartial")
+}

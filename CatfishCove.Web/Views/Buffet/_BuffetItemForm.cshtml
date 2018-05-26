@@ -1,0 +1,47 @@
+﻿@model BuffetItem
+
+<div class="ui form segment">
+  <form method="post">
+    <div class="ui error message">
+      <div asp-validation-summary="ModelOnly" class="ui error message"></div>
+    </div>
+    
+    <div class="field">
+      <label asp-for="Name"></label>
+      <div class="ui left labeled icon input">
+        <input asp-for="Name" />
+        <span asp-validation-for="Name" class="ui error message"></span>
+      </div>
+    </div>
+    
+    <div class="field">
+      <label asp-for="Description"></label>
+      <div class="ui left labeled icon input">
+        <input asp-for="Description" />
+        <span asp-validation-for="Description" class="ui error message"></span>
+      </div>
+    </div>
+    
+    <div class="field">
+      <label asp-for="FoodType"></label>
+      <div class="ui left labeled icon input">
+        <select asp-for="FoodType.Id" asp-items="ViewBag.FoodTypes"></select>
+        <span asp-validation-for="FoodType" class="ui error message"></span>
+      </div>
+    </div>
+    
+    <div class="field">
+      <label asp-for="RotationFrequency"></label>
+      <div class="ui left labeled icon input">
+        <input asp-for="RotationFrequency" />
+        <span asp-validation-for="RotationFrequency" class="ui error message"></span>
+      </div>
+    </div>
+
+    <input type="submit" value="Save" class="ui button teal"/>
+  </form>
+</div>
+<div>
+  <br />
+  <a asp-action="Index">Back to List</a>
+</div>

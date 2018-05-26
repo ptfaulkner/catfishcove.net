@@ -1,24 +1,25 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
-using System.Web.Mvc;
-using System.Web.UI;
+using System.Threading.Tasks;
+using CatfishCove.Web.Data;
 using CatfishCove.Web.Models;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace CatfishCove.Web.Controllers
 {
     public class MenuController : Controller
     {
-        private readonly CatfishCoveDatabase _dbContext;
+        private readonly CatfishCoveDbContext _dbContext;
 
-        public MenuController(CatfishCoveDatabase dbContext)
+        public MenuController(CatfishCoveDbContext dbContext)
         {
             _dbContext = dbContext;
         }
 
-        [OutputCache(Duration = 10, Location = OutputCacheLocation.Client)]
-        public ActionResult Index()
+        public IActionResult Index()
         {
             List<IGrouping<FoodType, MenuItem>> menuItems = _dbContext.MenuItems
                 .GroupBy(mi => mi.FoodType).ToList();
@@ -120,5 +121,5 @@ namespace CatfishCove.Web.Controllers
 
             return RedirectToAction("Index");
         }
-	}
+    }
 }

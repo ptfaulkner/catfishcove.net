@@ -11,6 +11,7 @@ TestResults
 # User-specific files
 *.suo
 *.user
+*.vs
 *.sln.docstates
 
 # Build results
@@ -110,3 +111,6 @@ thumbs.db
 
 *BingSiteAuth.xml
 *google29820f3810e1c782.html
+
+CatfishCove.Web/[Dd]atabase.db
+
