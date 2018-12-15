@@ -30,6 +30,7 @@ namespace CatfishCove.Web.Controllers
                 .Include("Casserole.BuffetItem")
                 .Include("Corn.BuffetItem")
                 .Include("Beans.BuffetItem")
+                .Include("AltChicken.BuffetItem")
                 .Where(brw => brw.SundayDate >= today)
                 .OrderByDescending(brw => brw.SundayDate)
                 .Take(4).ToList();
@@ -52,13 +53,15 @@ namespace CatfishCove.Web.Controllers
                 .Include("Meat.NextItem")
                 .Include("Casserole.NextItem")
                 .Include("Corn.NextItem")
-                .Include("Beans.NextItem").OrderByDescending(brw => brw.SundayDate).First();
+                .Include("Beans.NextItem")
+                .Include("AltChicken.NextItem").OrderByDescending(brw => brw.SundayDate).First();
 
             newWeek.SundayDate = recentMostWeek.SundayDate.AddDays(7);
             newWeek.Meat = recentMostWeek.Meat.NextItem;
             newWeek.Casserole = recentMostWeek.Casserole.NextItem;
             newWeek.Corn = recentMostWeek.Corn.NextItem;
             newWeek.Beans = recentMostWeek.Beans.NextItem;
+            newWeek.AltChicken = recentMostWeek.AltChicken.NextItem;
 
             _dbContext.BuffetRotatingWeeks.Add(newWeek);
             _dbContext.SaveChanges();
@@ -104,6 +107,7 @@ namespace CatfishCove.Web.Controllers
             ViewBag.CasseroleItems = new SelectList(_dbContext.BuffetSchedules.Include("BuffetItem").Where(bi => bi.FoodType.Name == "Casserole"), "Id", "BuffetItem");
             ViewBag.CornItems = new SelectList(_dbContext.BuffetSchedules.Include("BuffetItem").Where(bi => bi.FoodType.Name == "Corn"), "Id", "BuffetItem");
             ViewBag.BeanItems = new SelectList(_dbContext.BuffetSchedules.Include("BuffetItem").Where(bi => bi.FoodType.Name == "Beans"), "Id", "BuffetItem");
+            ViewBag.ChickenItems = new SelectList(_dbContext.BuffetSchedules.Include("BuffetItem").Where(bi => bi.FoodType.Name == "Alt Chicken"), "Id", "BuffetItem");
 
             return View();
         }
@@ -117,16 +121,19 @@ namespace CatfishCove.Web.Controllers
                 int cornId;
                 int casseroleId;
                 int beansId;
+                int altChickenId;
 
                 if (int.TryParse(Request.Form["Meat.Id"], out meatId) &&
                     int.TryParse(Request.Form["Corn.Id"], out cornId) &&
                     int.TryParse(Request.Form["Casserole.Id"], out casseroleId) &&
-                    int.TryParse(Request.Form["Beans.Id"], out beansId))
+                    int.TryParse(Request.Form["Beans.Id"], out beansId) &&
+                    int.TryParse(Request.Form["AltChicken.Id"], out altChickenId))
                 {
                     week.Meat = _dbContext.BuffetSchedules.First(bi => bi.Id == meatId);
                     week.Corn = _dbContext.BuffetSchedules.First(bi => bi.Id == cornId);
                     week.Casserole = _dbContext.BuffetSchedules.First(bi => bi.Id == casseroleId);
                     week.Beans = _dbContext.BuffetSchedules.First(bi => bi.Id == beansId);
+                    week.AltChicken = _dbContext.BuffetSchedules.First(bi => bi.Id == altChickenId);
 
                     _dbContext.BuffetRotatingWeeks.Add(week);
                     _dbContext.SaveChanges();
@@ -139,6 +146,7 @@ namespace CatfishCove.Web.Controllers
             ViewBag.CasseroleItems = new SelectList(_dbContext.BuffetSchedules.Include("BuffetItem").Where(bi => bi.FoodType.Name == "Casserole"), "Id", "BuffetItem");
             ViewBag.CornItems = new SelectList(_dbContext.BuffetSchedules.Include("BuffetItem").Where(bi => bi.FoodType.Name == "Corn"), "Id", "BuffetItem");
             ViewBag.BeanItems = new SelectList(_dbContext.BuffetSchedules.Include("BuffetItem").Where(bi => bi.FoodType.Name == "Beans"), "Id", "BuffetItem");
+            ViewBag.ChickenItems = new SelectList(_dbContext.BuffetSchedules.Include("BuffetItem").Where(bi => bi.FoodType.Name == "Alt Chicken"), "Id", "BuffetItem");
             return View(week);
         }
 
@@ -224,6 +232,16 @@ namespace CatfishCove.Web.Controllers
 
             ViewBag.BeanItems = beanItems;
 
+            SelectList altChickenItems = new SelectList(_dbContext.BuffetSchedules.Include("BuffetItem").Where(bi => bi.FoodType.Name == "Alt Chicken"), "Id", "BuffetItem");
+
+            var altChicken = altChickenItems.FirstOrDefault(c => c.Value == week.AltChicken.Id.ToString());
+            if (altChicken != null)
+            {
+                altChicken.Selected = true;
+            }
+
+            ViewBag.ChickenItems = altChickenItems;
+
             return View(week);
         }
 
@@ -238,16 +256,20 @@ namespace CatfishCove.Web.Controllers
                 int cornId;
                 int casseroleId;
                 int beansId;
+                int altChickenId;
 
                 if (int.TryParse(Request.Form["Meat.Id"], out meatId) &&
                     int.TryParse(Request.Form["Corn.Id"], out cornId) &&
                     int.TryParse(Request.Form["Casserole.Id"], out casseroleId) &&
-                    int.TryParse(Request.Form["Beans.Id"], out beansId))
+                    int.TryParse(Request.Form["Beans.Id"], out beansId) &&
+                    int.TryParse(Request.Form["AltChicken.Id"], out altChickenId)
+                                                               )
                 {
                     oldWeek.Meat = _dbContext.BuffetSchedules.First(bi => bi.Id == meatId);
                     oldWeek.Corn = _dbContext.BuffetSchedules.First(bi => bi.Id == cornId);
                     oldWeek.Casserole = _dbContext.BuffetSchedules.First(bi => bi.Id == casseroleId);
                     oldWeek.Beans = _dbContext.BuffetSchedules.First(bi => bi.Id == beansId);
+                    oldWeek.AltChicken = _dbContext.BuffetSchedules.First(bi => bi.Id == altChickenId);
                     oldWeek.SundayDate = week.SundayDate;
 
                     _dbContext.SaveChanges();

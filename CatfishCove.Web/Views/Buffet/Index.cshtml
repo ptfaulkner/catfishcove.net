@@ -41,6 +41,7 @@
         <th>Casserole</th>
         <th>Corn Style</th>
         <th>Beans</th>
+        <th>Alt Chicken</th>
       </tr>
     </thead>
     <tbody>
@@ -59,6 +60,7 @@
           <td>@(week.Casserole == null ? "Closed" : week.Casserole.BuffetItem.Name)</td>
           <td>@(week.Corn == null ? "Closed" : week.Corn.BuffetItem.Name)</td>
           <td>@(week.Beans == null ? "Closed" : week.Beans.BuffetItem.Name)</td>
+          <td>@(week.AltChicken == null ? "Closed" : week.AltChicken.BuffetItem.Name)</td>
         </tr>
       }
     </tbody>
