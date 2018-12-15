@@ -71,7 +71,7 @@ namespace CatfishCove.Web.Data
                     new BuffetItem { FoodType = vegetable, Description = "Traditional homemade green beans.", Name = "Green Beans", RotationFrequency = 0 },
                     new BuffetItem { FoodType = starch, Description = "Southern baked macaroni and cheese.", Name = "Macaroni and Cheese", RotationFrequency = 0 },
                     new BuffetItem { FoodType = vegetable, Description = "Sweet potatoes with a thin layer of brown sugar and pecan topping", Name = "Sweet Potato Casserole", RotationFrequency = 0 },
-                    new BuffetItem { FoodType = vegetable, Description = "Deep fried, thinnly sliced, and hand breaded squash", Name = "Fried Squash", RotationFrequency = 0 },
+                    new BuffetItem { FoodType = vegetable, Description = "Deep fried, thinly sliced, and hand breaded squash", Name = "Fried Squash", RotationFrequency = 0 },
                     new BuffetItem { FoodType = vegetable, Description = "Deep fried breaded okra pieces", Name = "Fried Okra", RotationFrequency = 0 },
                     new BuffetItem { FoodType = bread, Description = "Thick soft buttered southern style biscuits.", Name = "Biscuits", RotationFrequency = 0 },
                     new BuffetItem { FoodType = bread, Description = "The good stuff", Name = "Cornbread", RotationFrequency = 0 },
@@ -135,7 +135,7 @@ namespace CatfishCove.Web.Data
                 BuffetItemSchedule item7 = new BuffetItemSchedule
                 {
                     FoodType = casserole,
-                    BuffetItem = _dbContext.BuffetItems.First(bi => bi.Name == "Brocolli Casserole")
+                    BuffetItem = _dbContext.BuffetItems.First(bi => bi.Name == "Broccoli Casserole")
                 };
 
                 BuffetItemSchedule item8 = new BuffetItemSchedule
@@ -205,12 +205,12 @@ namespace CatfishCove.Web.Data
                     new MenuItem { Name = "Jumbo Shrimp", HalfOrderPrice = "14.75", WholeOrderPrice = "17.75", FoodType = shellFish },
                     new MenuItem { Name = "Green Shrimp", HalfOrderPrice = "13.50", WholeOrderPrice = "15.50", FoodType = shellFish },
                     new MenuItem { Name = "Boiled Shrimp", HalfOrderPrice = "13.50", WholeOrderPrice = "15.50", FoodType = shellFish },
-                    new MenuItem { Name = "Snow Crab Legs", HalfOrderPrice = "2lb 19.95", WholeOrderPrice = "All You Can Eat 34.95", FoodType = shellFish },
+                    new MenuItem { Name = "Snow Crab Legs", HalfOrderPrice = "2lb Market Price", WholeOrderPrice = "Market Price", FoodType = shellFish },
                     new MenuItem { Name = "Deviled Crab", HalfOrderPrice = "9.00", WholeOrderPrice = "11.25", FoodType = shellFish },
                     new MenuItem { Name = "Fantail Shrimp", HalfOrderPrice = "13.50", WholeOrderPrice = "15.50", FoodType = shellFish },
                     new MenuItem { Name = "Clam Strips", HalfOrderPrice = "9.00", WholeOrderPrice = "11.25", FoodType = shellFish },
                     new MenuItem { Name = "Shrimp Salad (fried or boiled)", WholeOrderPrice = "9.75", FoodType = shellFish },
-                    new MenuItem { Name = "Hamberger Steak", HalfOrderPrice = "7.50", WholeOrderPrice = "9.75", FoodType = landLubbers },
+                    new MenuItem { Name = "Hamburger Steak", HalfOrderPrice = "7.50", WholeOrderPrice = "9.75", FoodType = landLubbers },
                     new MenuItem { Name = "Pork Chops", HalfOrderPrice = "7.95", WholeOrderPrice = "7.95", FoodType = landLubbers, Description = "fried or grilled"},
                     new MenuItem { Name = "Hot-n-Spicy Chicken Wings", HalfOrderPrice = "9.00", WholeOrderPrice = "11.25", FoodType = poultry },
                     new MenuItem { Name = "Fried or Grilled Chickens", HalfOrderPrice = "9.00", WholeOrderPrice = "11.25", FoodType = poultry },

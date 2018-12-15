@@ -58,6 +58,7 @@ namespace CatfishCove.Web.Models
         public BuffetItemSchedule Corn { get; set; }
         [Required]
         public BuffetItemSchedule Beans { get; set; }
+        public BuffetItemSchedule AltChicken { get; set; }
     }
 
     public class BuffetItemSchedule

@@ -12,7 +12,7 @@
         <span asp-validation-for="SundayDate" class="ui error message"></span>
       </div>
     </div>
-    
+
     <div class="field">
       <label asp-for="Meat"></label>
       <div class="ui left labeled icon input">
@@ -20,7 +20,7 @@
         <span asp-validation-for="Meat" class="ui error message"></span>
       </div>
     </div>
-    
+
     <div class="field">
       <label asp-for="Casserole"></label>
       <div class="ui left labeled icon input">
@@ -36,12 +36,20 @@
         <span asp-validation-for="Corn" class="ui error message"></span>
       </div>
     </div>
-    
+
     <div class="field">
       <label asp-for="Beans"></label>
       <div class="ui left labeled icon input">
         <select asp-for="Beans.Id" asp-items="ViewBag.BeanItems"></select>
         <span asp-validation-for="Beans" class="ui error message"></span>
+      </div>
+    </div>
+
+    <div class="field">
+      <label asp-for="AltChicken"></label>
+      <div class="ui left labeled icon input">
+        <select asp-for="AltChicken.Id" asp-items="ViewBag.ChickenItems"></select>
+        <span asp-validation-for="AltChicken" class="ui error message"></span>
       </div>
     </div>
 
